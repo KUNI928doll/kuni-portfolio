@@ -1,0 +1,25 @@
+@use "variables" as *;
+
+// ============================================
+// Breakpoints
+// ============================================
+@mixin tablet {
+  @media (max-width: $bp-tablet) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: $bp-mobile) {
+    @content;
+  }
+}
+
+// ============================================
+// Layout
+// ============================================
+@mixin inner($width: $max-width) {
+  max-width: $width;
+  margin: 0 auto;
+  padding: 0 24px;
+}

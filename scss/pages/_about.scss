@@ -1,0 +1,66 @@
+@use "../abstracts" as *;
+
+// ============================================
+// About
+// ============================================
+.about {
+  padding: $section-padding;
+
+  &__inner {
+    @include inner;
+  }
+
+  &__content {
+    display: flex;
+    gap: 48px;
+    align-items: flex-start;
+
+    @include tablet {
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+  }
+
+  &__photo {
+    flex-shrink: 0;
+
+    img {
+      width: 280px;
+      height: auto;
+      border-radius: 16px;
+      object-fit: cover;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+
+      @include tablet {
+        width: 220px;
+      }
+
+      @include mobile {
+        width: 180px;
+      }
+    }
+  }
+
+  &__text {
+    flex: 1;
+
+    p {
+      font-size: 14px;
+      line-height: 2.1;
+      margin-bottom: 16px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      @include mobile {
+        font-size: 13px;
+      }
+    }
+  }
+
+  @include tablet {
+    padding: $section-padding-sp;
+  }
+}

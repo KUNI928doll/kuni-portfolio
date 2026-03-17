@@ -1,0 +1,18 @@
+// ============================================
+// Main Entry Point
+// ============================================
+
+// Abstracts (variables, mixins) - no output
+@use "abstracts";
+
+// Base styles
+@use "base";
+
+// Reusable components
+@use "components";
+
+// Layout (header, footer)
+@use "layout";
+
+// Page-specific sections
+@use "pages";

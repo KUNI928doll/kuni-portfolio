@@ -1,0 +1,17 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.swp
+*.swo
+
+# Sass cache
+.sass-cache/
+
+# Source maps (optional: remove this line if you want to commit maps)
+*.css.map
+
+# Node (if using npm tools later)
+node_modules/

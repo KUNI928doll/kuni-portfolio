@@ -1,0 +1,93 @@
+@use "../abstracts" as *;
+
+// ============================================
+// Flow
+// ============================================
+.flow {
+  padding: $section-padding;
+  background: $color-bg-cream;
+
+  &__inner {
+    @include inner(800px);
+  }
+
+  &__steps {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__step {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    width: 100%;
+    background: $color-white;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+
+    @include tablet {
+      padding: 24px;
+      gap: 16px;
+    }
+
+    @include mobile {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 20px 16px;
+    }
+  }
+
+  &__step-num {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: $font-accent;
+    font-size: 32px;
+    color: $color-text;
+    background: $color-bg-green;
+    border-radius: 50%;
+
+    @include mobile {
+      width: 40px;
+      height: 40px;
+      font-size: 26px;
+    }
+  }
+
+  &__step-title {
+    font-family: $font-heading;
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    letter-spacing: 0.04em;
+  }
+
+  &__step-desc {
+    font-size: 14px;
+    line-height: 2;
+    color: $color-text;
+  }
+
+  &__step-line {
+    width: 2px;
+    height: 32px;
+    background: repeating-linear-gradient(
+      to bottom,
+      $color-text-gray 0px,
+      $color-text-gray 4px,
+      transparent 4px,
+      transparent 8px
+    );
+    opacity: 0.4;
+  }
+
+  @include tablet {
+    padding: $section-padding-sp;
+  }
+}

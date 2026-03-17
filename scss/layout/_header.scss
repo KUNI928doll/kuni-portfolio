@@ -1,0 +1,30 @@
+@use "../abstracts" as *;
+
+// ============================================
+// Header
+// ============================================
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  padding: 20px 0;
+  background: rgba($color-bg, 0.9);
+  backdrop-filter: blur(8px);
+
+  &__inner {
+    @include inner;
+    text-align: center;
+  }
+
+  &__logo-text {
+    font-family: $font-accent;
+    font-size: 32px;
+    color: $color-text;
+
+    @include mobile {
+      font-size: 26px;
+    }
+  }
+}

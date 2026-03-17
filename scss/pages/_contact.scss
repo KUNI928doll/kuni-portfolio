@@ -1,0 +1,22 @@
+@use "../abstracts" as *;
+
+// ============================================
+// Contact
+// ============================================
+.contact {
+  padding: $section-padding;
+  background: $color-bg-green;
+  text-align: center;
+
+  &__inner {
+    @include inner;
+  }
+
+  &__action {
+    margin-top: 8px;
+  }
+
+  @include tablet {
+    padding: $section-padding-sp;
+  }
+}

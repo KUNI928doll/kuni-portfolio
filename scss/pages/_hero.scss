@@ -1,0 +1,175 @@
+@use "../abstracts" as *;
+
+// ============================================
+// Hero / First View
+// ============================================
+.hero {
+  position: relative;
+  padding: 140px 24px 80px;
+  background: $color-bg-cream;
+  overflow: hidden;
+
+  &__bg-wave {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    pointer-events: none;
+
+    &--top {
+      top: -1px;
+      background: $color-bg;
+      clip-path: ellipse(55% 100% at 50% 0%);
+    }
+
+    &--bottom {
+      bottom: -1px;
+      background: $color-bg;
+      clip-path: ellipse(55% 100% at 50% 100%);
+    }
+  }
+
+  &__inner {
+    @include inner;
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    margin-bottom: 60px;
+
+    @include tablet {
+      flex-direction: column-reverse;
+      gap: 32px;
+      text-align: center;
+    }
+  }
+
+  &__text {
+    flex: 1;
+    max-width: 520px;
+  }
+
+  &__catch {
+    font-family: $font-heading;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.8;
+    letter-spacing: 0.06em;
+    margin-bottom: 24px;
+
+    @include tablet {
+      font-size: 22px;
+    }
+
+    @include mobile {
+      font-size: 19px;
+    }
+  }
+
+  &__catch-emphasis {
+    font-size: 36px;
+    color: $color-text;
+    position: relative;
+    display: inline;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 2px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: $color-bg-pink;
+      border-radius: 2px;
+    }
+
+    @include tablet {
+      font-size: 28px;
+    }
+
+    @include mobile {
+      font-size: 24px;
+    }
+  }
+
+  &__sub {
+    font-family: $font-body;
+    font-size: 14px;
+    line-height: 2;
+    color: $color-text-gray;
+
+    @include mobile {
+      font-size: 13px;
+    }
+  }
+
+  &__photo {
+    flex-shrink: 0;
+
+    img {
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid $color-white;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+
+      @include tablet {
+        width: 200px;
+        height: 200px;
+      }
+
+      @include mobile {
+        width: 160px;
+        height: 160px;
+      }
+    }
+  }
+
+  &__nav {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+
+    @include tablet {
+      gap: 10px;
+    }
+  }
+
+  &__nav-btn {
+    font-family: $font-accent;
+    font-size: 18px;
+    padding: 12px 32px;
+    background: $color-white;
+    border-radius: 50px;
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+    &:hover {
+      background: $color-bg-green;
+      transform: translateY(-2px);
+    }
+
+    @include tablet {
+      font-size: 16px;
+      padding: 10px 24px;
+    }
+
+    @include mobile {
+      font-size: 14px;
+      padding: 8px 18px;
+    }
+  }
+
+  @include tablet {
+    padding: 120px 20px 60px;
+  }
+
+  @include mobile {
+    padding: 100px 16px 48px;
+  }
+}
