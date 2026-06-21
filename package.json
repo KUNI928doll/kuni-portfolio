@@ -1,0 +1,16 @@
+{
+  "name": "kuni-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "gulp"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-sass": "^5.1.0",
+    "sass": "^1.77.0",
+    "gulp-postcss": "^9.1.0",
+    "autoprefixer": "^10.4.19",
+    "browser-sync": "^3.0.2"
+  }
+}
