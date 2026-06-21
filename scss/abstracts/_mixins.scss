@@ -1,0 +1,41 @@
+@use "variables" as *;
+
+// レスポンシブ
+@mixin pc {
+  @media (max-width: #{$bp-pc}) {
+    @content;
+  }
+}
+
+@mixin tab {
+  @media (max-width: #{$bp-tab}) {
+    @content;
+  }
+}
+
+@mixin sp {
+  @media (max-width: #{$bp-sp}) {
+    @content;
+  }
+}
+
+// インナー幅
+@mixin inner($width: $max-width) {
+  max-width: $width;
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+// ホバー（タッチデバイス除外）
+@mixin hover {
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+// px関数（スムーズレスポンシブ）
+@function px($px) {
+  @return calc(#{$px} * var(--1px));
+}

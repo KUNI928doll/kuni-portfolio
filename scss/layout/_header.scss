@@ -1,0 +1,19 @@
+@use "../abstracts" as *;
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: $z-header;
+  background-color: #e5efeb;
+}
+
+.header__inner {
+  @include inner;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}

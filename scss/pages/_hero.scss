@@ -1,0 +1,148 @@
+@use "../abstracts" as *;
+
+.hero {
+  min-height: 100svh;
+  padding-top: 280px;
+  padding-bottom: 60px;
+  background-color: $color-white;
+  background-image: url("../../images/header-bg.png");
+  background-repeat: no-repeat;
+  background-size: 100% 270px;
+  background-position: top center;
+  display: flex;
+  align-items: center;
+
+  @include tab {
+    padding-top: 240px;
+  }
+}
+
+.hero__inner {
+  @include inner;
+  width: 100%;
+}
+
+.hero__logo {
+  display: flex;
+  justify-content: center;
+
+  img {
+    width: 200px;
+    height: auto;
+
+    @include tab {
+      width: 160px;
+    }
+  }
+
+  @include hover {
+    opacity: 0.8;
+    transition: opacity $transition-base;
+  }
+}
+
+.hero__body {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+
+  @include tab {
+    flex-direction: column;
+    gap: 40px;
+  }
+}
+
+.hero__left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.hero__text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hero__catch {
+  font-family: $font-heading;
+  font-size: var(--font-size-2xl);
+  font-weight: 400;
+  line-height: 1.6;
+  color: $color-dark;
+
+  @include tab {
+    font-size: var(--font-size-xl);
+  }
+}
+
+.hero__sub {
+  font-size: var(--font-size-base);
+  line-height: 1.9;
+  color: $color-gray;
+}
+
+.hero__photo {
+  img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 50%;
+
+    @include tab {
+      width: 140px;
+      height: 140px;
+    }
+  }
+}
+
+// 右ナビゲーション
+.hero__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 8px;
+
+  @include tab {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+}
+
+.hero__nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 140px;
+  padding: 10px 16px;
+  border: 1px solid $color-gray;
+  border-radius: 40px;
+  font-family: $font-heading;
+  font-size: var(--font-size-sm);
+  color: $color-dark;
+  background-color: $color-white;
+  transition: background-color $transition-base, color $transition-base, border-color $transition-base;
+
+  @include hover {
+    background-color: $color-green;
+    border-color: $color-green;
+  }
+
+  @include tab {
+    width: auto;
+    padding: 8px 20px;
+  }
+}
+
+.hero__nav-btn--contact {
+  background-color: $color-green;
+  border-color: $color-green;
+  font-weight: 500;
+
+  @include hover {
+    opacity: 0.85;
+    background-color: $color-green;
+  }
+}
