@@ -1,0 +1,138 @@
+@use 'global' as *;
+
+.p-fv {
+  padding-top: rem(140);
+  padding-bottom: rem(48);
+  overflow-x: clip;
+  background: url('../img/fv-wave-top.svg') center top / 100% auto no-repeat, $color-white;
+
+  @include mq(md) {
+    padding-top: rem(252);
+    padding-bottom: rem(40);
+  }
+}
+
+.p-fv__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @include mq(md) {
+    position: relative;
+    display: block;
+    min-height: rem(560);
+  }
+}
+
+.p-fv__body {
+  text-align: center;
+
+  @include mq(md) {
+    margin-left: rem(184);
+    text-align: left;
+  }
+}
+
+.p-fv__catchWrap {
+  @include mq(md) {
+    position: relative;
+  }
+}
+
+.p-fv__catch {
+  font-family: $ff-serif;
+  font-size: rem(22);
+  line-height: 1.958;
+
+  @include mq(md) {
+    font-size: rem(48);
+  }
+}
+
+.p-fv__underline {
+  display: none;
+
+  @include mq(md) {
+    position: absolute;
+    top: rem(177);
+    left: rem(104);
+    display: block;
+    width: rem(465);
+  }
+}
+
+.p-fv__pencil {
+  display: none;
+
+  @include mq(md) {
+    position: absolute;
+    top: rem(114);
+    left: rem(555);
+    display: block;
+    width: rem(82);
+  }
+}
+
+.p-fv__lead {
+  margin-top: rem(24);
+  font-family: $ff-serif;
+  font-size: rem(16);
+  letter-spacing: 0;
+  line-height: 1.633;
+
+  @include mq(md) {
+    margin-top: rem(61);
+    margin-left: rem(94);
+    font-size: rem(30);
+  }
+}
+
+.p-fv__mark {
+  position: relative;
+  isolation: isolate;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: em(-2, 30) em(-11, 30);
+    z-index: -1;
+    background: $color-red;
+    border-radius: 100vh;
+  }
+}
+
+.p-fv__photo {
+  position: relative;
+  margin-top: rem(40);
+  width: min(rem(260), 72vw);
+  aspect-ratio: 14 / 17;
+
+  @include mq(md) {
+    position: absolute;
+    top: rem(149);
+    left: rem(-68);
+    margin-top: 0;
+    width: rem(336);
+  }
+}
+
+.p-fv__frame {
+  position: absolute;
+  top: -2.5%;
+  left: -2.4%;
+  z-index: 0;
+  width: 105%;
+}
+
+.p-fv__photoImg {
+  position: relative;
+  z-index: 1;
+}
+
+.p-fv__leaf {
+  position: absolute;
+  top: 33%;
+  left: 12%;
+  z-index: 2;
+  width: 20.5%;
+}

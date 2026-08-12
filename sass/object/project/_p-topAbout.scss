@@ -1,0 +1,111 @@
+@use 'global' as *;
+
+// 自己紹介（About）— 上部レース区切り / アーチ写真（左）+ クリームカードの経歴（右）
+.p-topAbout {
+  position: relative;
+  padding-block: rem(114) rem(140);
+  // 上部フルブリードのレース区切り（about-lace.svg）
+  &::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: rem(28);
+    background: url('../img/about-lace.svg') repeat-x left top / auto 100%;
+  }
+
+  @include mq(under-md) {
+    padding-block: rem(72) rem(96);
+  }
+}
+
+.p-topAbout__columns {
+  margin-top: rem(96);
+  display: flex;
+  align-items: flex-start;
+  gap: rem(24);
+
+  @include mq(under-md) {
+    margin-top: rem(56);
+    flex-direction: column;
+    align-items: stretch;
+    gap: rem(40);
+  }
+}
+
+// アーチ型の人物写真（外側フレーム = Figma Rectangle 27 を擬似要素で再現）
+.p-topAbout__photo {
+  position: relative;
+  flex: 0 0 rem(317);
+  &::before {
+    content: '';
+    position: absolute;
+    inset: rem(-10) rem(-8);
+    border: 1px solid $color-gray;
+    border-radius: 50% 50% 0 0 / 42% 42% 0 0;
+  }
+
+  @include mq(under-md) {
+    flex-basis: auto;
+    width: rem(260);
+    margin-inline: auto;
+  }
+}
+
+.p-topAbout__photo picture img {
+  position: relative;
+  border: 1px solid $color-gray;
+  aspect-ratio: 317 / 387;
+  object-fit: cover;
+  border-radius: 50% 50% 0 0 / 42% 42% 0 0;
+}
+
+// 写真左下に重ねる花装飾（about-flower.svg・白線画）
+.p-topAbout__flower {
+  position: absolute;
+  bottom: rem(19);
+  left: rem(7);
+  width: rem(66);
+}
+
+// 経歴テキストを載せるクリームのブロブカード（about-bg.svg）
+.p-topAbout__body {
+  position: relative;
+  flex: 1 1 0;
+  padding: rem(48) rem(40) rem(56);
+  background: url('../img/about-bg.svg') no-repeat center / 100% 100%;
+
+  @include mq(under-md) {
+    flex-basis: auto;
+    padding: rem(40) rem(24) rem(44);
+  }
+}
+
+// カード上部に貼られたマスキングテープ（about-tape.svg・斜め）
+.p-topAbout__tape {
+  position: absolute;
+  top: rem(-24);
+  left: 30%;
+  width: rem(98);
+
+  @include mq(under-md) {
+    top: rem(-20);
+    left: auto;
+    right: rem(24);
+    width: rem(72);
+  }
+}
+
+// 経歴本文。各行の下に薄いグレー罫線（about-lines.svg 由来 #B5B2B2・36px = 2.25em 間隔）
+.p-topAbout__career {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(2.25em - 1px),
+    $color-line calc(2.25em - 1px),
+    $color-line 2.25em
+  );
+  strong {
+    font-weight: $fw-medium;
+  }
+}

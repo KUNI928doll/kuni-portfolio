@@ -1,0 +1,18 @@
+// フォントファミリー（すべて Google Fonts）
+$ff-sans: 'Noto Sans JP', sans-serif; // 本文
+$ff-serif: 'Kiwi Maru', serif; // 和文見出し・キャッチ（丸ゴシック系）
+$ff-en: 'Inter', sans-serif; // 欧文ラベル・ナビ
+$ff-script: 'Sacramento', cursive; // 手書き風スクリプト（ロゴ・装飾数字）
+$ff-base: $ff-sans;
+
+// font-weight
+$fw-regular: 400;
+$fw-medium: 500;
+$fw-bold: 700;
+$fw-black: 900;
+$fw-base: $fw-regular;
+
+// 本文の基準（reset で body に適用）
+$lh-base: 2.25;
+$ls-base: 0.04em;
+$opacity: 0.7;

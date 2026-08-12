@@ -1,0 +1,64 @@
+@use 'global' as *;
+
+// 制作実績アーカイブ（一覧）
+.p-worksArchive {
+  padding-block: rem(48) rem(140); // 下端はフッターの波（l-footer::before）が重なるため広めに確保
+  background: $color-cream;
+
+  @include mq(md) {
+    padding-block: rem(64) rem(240);
+  }
+}
+.p-worksArchive__list {
+  margin-top: rem(32);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: rem(20);
+
+  @include mq(md) {
+    gap: rem(32);
+  }
+  @include mq(lg) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: rem(40);
+  }
+}
+.p-worksArchive__empty {
+  margin-top: rem(32);
+  text-align: center;
+}
+.p-worksArchive__pagination {
+  margin-top: rem(56);
+  display: flex;
+  justify-content: center;
+
+  // WordPress the_posts_pagination() の出力（.page-numbers）を装飾
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: rem(8);
+    justify-content: center;
+  }
+  .page-numbers {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: rem(40);
+    aspect-ratio: 1;
+    color: $color-text;
+    background: $color-white;
+    border: 1px solid $color-line;
+    border-radius: rem(6);
+    transition: color 0.3s ease, background 0.3s ease;
+  }
+  .page-numbers.current {
+    color: $color-white;
+    background: $color-text;
+    border-color: $color-text;
+  }
+  a.page-numbers {
+    @include hover {
+      background: $color-green;
+    }
+  }
+}

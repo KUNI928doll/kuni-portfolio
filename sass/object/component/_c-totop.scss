@@ -1,0 +1,46 @@
+@use 'global' as *;
+
+// TOP へ戻る（右下固定・スクロールで出現・hover で上昇）
+.c-totop {
+  position: fixed;
+  right: rem(24);
+  bottom: rem(24);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: rem(4);
+  width: rem(88);
+  aspect-ratio: 88 / 132;
+  padding-top: rem(14);
+  color: $color-text;
+  background: url('../img/totop-blob.svg') no-repeat center / contain;
+  opacity: 0;
+  transform: translateY(rem(16));
+  transition: opacity 0.4s ease, transform 0.4s ease;
+
+  &.is-shown {
+    opacity: 1;
+    transform: none;
+  }
+
+  @include hover {
+    &.is-shown {
+      transform: translateY(rem(-6));
+    }
+  }
+  &:focus-visible {
+    outline: 2px solid $color-gray;
+    outline-offset: 2px;
+  }
+}
+
+.c-totop__icon {
+  width: rem(46);
+}
+
+.c-totop__text {
+  font-family: $ff-serif;
+  font-size: rem(18);
+}

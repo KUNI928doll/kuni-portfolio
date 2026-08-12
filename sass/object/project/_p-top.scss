@@ -1,0 +1,8 @@
+@use 'global' as *;
+
+// トップページ全体（各セクションの入れ物）
+// セクションは波型背景で隣接するため間に margin を入れない。
+// full-bleed 背景（幅 100vw / 1374px 相当）の横はみ出しを clip する。
+.p-top {
+  overflow-x: clip;
+}

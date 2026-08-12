@@ -1,0 +1,116 @@
+@use 'global' as *;
+
+// 制作実績詳細
+.p-worksSingle {
+  padding-block: rem(48) rem(140); // 下端はフッターの波（l-footer::before）が重なるため広めに確保
+  background: $color-cream;
+
+  @include mq(md) {
+    padding-block: rem(64) rem(240);
+  }
+}
+.p-worksSingle__head {
+  margin-top: rem(32);
+  text-align: center;
+}
+.p-worksSingle__cat {
+  padding: rem(5) rem(18);
+  display: inline-flex;
+  align-items: center;
+  font-size: rem(13);
+  font-weight: $fw-medium;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  background: $color-green;
+  border-radius: 100vh;
+}
+.p-worksSingle__title {
+  margin-top: rem(16);
+  font-family: $ff-serif;
+  font-size: rem(26);
+  line-height: 1.5;
+
+  @include mq(md) {
+    font-size: rem(38);
+  }
+}
+.p-worksSingle__img {
+  margin-top: rem(40);
+  margin-inline: auto;
+  max-width: rem(880);
+  overflow: clip;
+  aspect-ratio: 16 / 9;
+  border: 1px solid $color-text;
+  border-radius: rem(10);
+
+  img {
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+}
+.p-worksSingle__body {
+  margin-top: rem(48);
+  margin-inline: auto;
+  max-width: rem(760);
+
+  h2 {
+    margin-top: rem(48);
+    font-family: $ff-serif;
+    font-size: rem(24);
+    line-height: 1.5;
+  }
+  h3 {
+    margin-top: rem(40);
+    font-family: $ff-serif;
+    font-size: rem(20);
+    line-height: 1.5;
+  }
+  p {
+    margin-top: rem(24);
+  }
+  ul {
+    margin-top: rem(24);
+    padding-left: 1.5em;
+    list-style: disc;
+  }
+  ol {
+    margin-top: rem(24);
+    padding-left: 1.5em;
+    list-style: decimal;
+  }
+  li + li {
+    margin-top: rem(8);
+  }
+  a {
+    display: inline;
+    text-decoration: underline;
+
+    @include hover {
+      opacity: $opacity;
+    }
+  }
+  img {
+    margin-top: rem(24);
+    border-radius: rem(10);
+  }
+  :first-child {
+    margin-top: 0;
+  }
+}
+.p-worksSingle__actions {
+  margin-top: rem(56);
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(20);
+  justify-content: center;
+}
+.p-worksSingle__btn {
+  width: rem(280);
+  font-family: $ff-serif;
+  letter-spacing: 0;
+
+  @include mq(under-md) {
+    width: 100%;
+    max-width: rem(320);
+  }
+}

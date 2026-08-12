@@ -1,0 +1,106 @@
+@use 'global' as *;
+
+// お問い合わせ（くすみグリーンの波型帯・紙飛行機装飾つき）
+.p-topContact {
+  position: relative;
+  isolation: isolate; // このセクション内で z-index を完結させる（装飾を確実に背面へ）
+  padding-block: rem(72) rem(96);
+  overflow-x: clip;
+  // セクション全体をくすみグリーンで塗り（高さに関係なく全面緑）、上端だけ白い波型を重ねる
+  background-color: $color-green;
+  background-image: url(../img/contact-wave-top.svg);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: 100% auto;
+
+  @include mq(md) {
+    padding-block: rem(100) rem(150);
+  }
+}
+.p-topContact__inner {
+  position: relative;
+  z-index: 1; // 装飾の紙飛行機より前面に（フォームに被らせない）
+  text-align: center;
+}
+.p-topContact__heading {
+  font-family: $ff-en;
+}
+.p-topContact__en {
+  display: block;
+  font-size: rem(24);
+  line-height: 1.2;
+}
+.p-topContact__ja {
+  margin-top: rem(11);
+  display: block;
+  font-family: $ff-serif;
+  font-size: rem(32);
+  line-height: 1.44;
+}
+// フォーム本体（CF7）の設置枠
+.p-topContact__form {
+  margin-top: rem(48);
+
+  @include mq(md) {
+    margin-top: rem(72);
+  }
+}
+// CF7 未導入時のフォールバック用テキスト
+.p-topContact__note {
+  margin-bottom: rem(20);
+  font-size: rem(15);
+  line-height: 1.9;
+}
+.p-topContact__action {
+  margin-top: rem(24);
+}
+.p-topContact__btn {
+  font-family: $ff-en;
+  line-height: 1;
+}
+.p-topContact__sns {
+  margin-top: rem(32);
+  display: flex;
+  justify-content: center;
+  gap: rem(52);
+
+  @include mq(md) {
+    margin-top: rem(41);
+  }
+}
+.p-topContact__snsLink {
+  @include hover {
+    opacity: $opacity;
+  }
+  &:focus-visible {
+    outline: 2px solid $color-gray;
+    outline-offset: 2px;
+  }
+}
+.p-topContact__snsIcon {
+  display: block;
+  width: rem(45);
+}
+.p-topContact__snsIcon--x {
+  width: rem(39);
+}
+// 紙飛行機（糸の軌跡＝planeThread ＋ 機体＝planeBody）
+// フォームカードには被らないよう、見出し周りの上部を左から飛ばす（背面 z-index 0）
+.p-topContact__plane {
+  position: absolute;
+  z-index: 0; // 見出し・フォーム（__inner: z-index 1）より背面
+  top: rem(150);
+  left: calc(50% - #{rem(700)});
+  display: none;
+  width: rem(656.5);
+
+  @include mq(md) {
+    display: block;
+  }
+}
+.p-topContact__planeBody {
+  position: absolute;
+  top: rem(-30.9);
+  left: rem(505.5);
+  width: rem(265.7);
+}

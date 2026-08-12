@@ -1,0 +1,100 @@
+@use 'global' as *;
+
+.p-topWorks {
+  padding-block: rem(120);
+  background: url('../img/works-bg.svg') no-repeat top center / 100% auto, $color-cream;
+}
+.p-topWorks__heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: rem(16);
+  line-height: 1;
+  letter-spacing: 0;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 0 1 rem(112);
+    height: rem(4);
+    background: url('../img/works-heading-line.svg') no-repeat center / contain;
+  }
+
+  @include mq(under-md) {
+    gap: rem(10);
+
+    &::before,
+    &::after {
+      flex-basis: rem(36);
+    }
+  }
+}
+.p-topWorks__headingJa {
+  font-family: $ff-serif;
+  font-size: rem(32);
+  white-space: nowrap;
+}
+.p-topWorks__headingEn {
+  font-family: $ff-en;
+  font-size: rem(24);
+  white-space: nowrap;
+}
+.p-topWorks__list {
+  margin-top: rem(80);
+  display: grid;
+  gap: rem(32);
+
+  @include mq(md) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: rem(80);
+  }
+}
+.p-topWorks__item {
+  padding: rem(24) rem(20);
+  overflow: clip;
+  background: $color-white;
+  border: 1px solid $color-text;
+  border-radius: rem(10);
+
+  @include hover {
+    .p-topWorks__img img {
+      transform: translateY(rem(-8)) scale(1.03);
+    }
+    .p-topWorks__caption {
+      opacity: 1;
+    }
+  }
+}
+.p-topWorks__img {
+  position: relative; // ABS_ANCHOR: __caption を absolute で重ねる基準
+  aspect-ratio: 248 / 197;
+
+  img {
+    aspect-ratio: 248 / 197;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+}
+.p-topWorks__caption {
+  position: absolute; // ABSOLUTE_FILL: 写真の上に hover 説明を全面オーバーレイ
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: rem(16);
+  color: $color-white;
+  font-size: rem(15);
+  line-height: 1.6;
+  text-align: center;
+  background: rgba($color-text, 0.55);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.p-topWorks__more {
+  margin-top: rem(80);
+  margin-inline: auto;
+  display: flex;
+  width: rem(247);
+  font-family: $ff-serif;
+  letter-spacing: 0;
+}

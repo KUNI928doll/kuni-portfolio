@@ -1,0 +1,79 @@
+@use 'global' as *;
+
+// 汎用の固定ページ（プライバシーポリシー等）。下層レイアウトで本文を表示
+.p-page {
+  padding-block: rem(48) rem(96);
+
+  @include mq(md) {
+    padding-block: rem(64) rem(140);
+  }
+}
+.p-page__breadcrumb {
+  margin-bottom: rem(32);
+}
+
+// 本文（the_content）— worksSingle の本文と同じ組版に合わせる
+.p-page__body {
+  margin-inline: auto;
+  max-width: rem(760);
+  font-size: rem(16);
+  line-height: 2;
+
+  h2 {
+    margin-top: rem(56);
+    font-family: $ff-serif;
+    font-size: rem(24);
+    line-height: 1.5;
+  }
+  h3 {
+    margin-top: rem(40);
+    font-family: $ff-serif;
+    font-size: rem(20);
+    line-height: 1.5;
+  }
+  p {
+    margin-top: rem(24);
+  }
+  ul {
+    margin-top: rem(24);
+    padding-left: 1.5em;
+    list-style: disc;
+  }
+  ol {
+    margin-top: rem(24);
+    padding-left: 1.5em;
+    list-style: decimal;
+  }
+  li + li {
+    margin-top: rem(8);
+  }
+  a {
+    display: inline;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+
+    @include hover {
+      opacity: $opacity;
+    }
+  }
+  table {
+    margin-top: rem(32);
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      padding: rem(12) rem(16);
+      text-align: left;
+      vertical-align: top;
+      border: 1px solid $color-line;
+    }
+    th {
+      white-space: nowrap;
+      background: $color-green;
+    }
+  }
+  :first-child {
+    margin-top: 0;
+  }
+}

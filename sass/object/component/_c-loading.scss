@@ -1,0 +1,165 @@
+@use 'global' as *;
+
+// ローディング（鉛筆でロゴを書く → ノートが中央から左右に開いて FV が現れる）
+.c-loading {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  perspective: 1800px;
+  // 開き終わったら操作を透過（本編へ）
+  &.is-opened {
+    pointer-events: none;
+  }
+}
+
+// ノートの左右ページ（緑の表紙）。中央（本の背）を軸に開く
+.c-loading__page {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background: $color-green; // 完全に不透明（透けないように）
+  backface-visibility: hidden;
+  will-change: transform;
+  transition: transform 1s cubic-bezier(0.76, 0, 0.24, 1);
+  // 中央（背）側にうっすら陰（不透明な緑の上に重ねるので透けない）
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+}
+
+.c-loading__page--left {
+  left: 0;
+  transform-origin: right center;
+  &::after {
+    background: linear-gradient(to right, transparent 80%, rgba(48, 48, 48, 0.07));
+  }
+}
+
+.c-loading__page--right {
+  right: 0;
+  transform-origin: left center;
+  &::after {
+    background: linear-gradient(to left, transparent 80%, rgba(48, 48, 48, 0.07));
+  }
+}
+
+// ロゴ（表紙の上・開く直前にフェード）
+.c-loading__inner {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.4s ease;
+}
+
+.c-loading__draw {
+  position: relative;
+  width: rem(240);
+
+  @include mq(under-md) {
+    width: rem(190);
+  }
+}
+
+// ロゴ本体は SVG。実ロゴ画像を「マスクのストローク」で書き順どおりに描き出す
+.c-loading__logo {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+// マスクの各線：pathLength=1 に正規化し、dashoffset 1→0 で線が伸びる＝描かれる
+.c-loading__ink {
+  stroke-dasharray: 1 1.001;
+  stroke-dashoffset: 1;
+  animation: c-loading-draw 0.4s ease forwards;
+  animation-delay: calc(0.55s + var(--i, 0) * 0.05s);
+}
+
+// 表紙（左右）→ 綴じの X → 左ブラケット → アンダーライン → 手・鉛筆 → カタカナ → 右矢印
+.c-loading__ink:nth-child(1)  { animation-duration: 0.45s; animation-delay: 0s; }    // 表紙 左
+.c-loading__ink:nth-child(2)  { animation-duration: 0.45s; animation-delay: 0.3s; }  // 表紙 右
+.c-loading__ink:nth-child(3)  { animation-duration: 0.2s;  animation-delay: 0.55s; } // 綴じ X
+.c-loading__ink:nth-child(4)  { animation-duration: 0.2s;  animation-delay: 0.6s; }  // 綴じ X
+.c-loading__ink:nth-child(5)  { animation-duration: 0.25s; animation-delay: 0.7s; }  // 左ブラケット
+.c-loading__ink:nth-child(6)  { animation-duration: 0.85s; animation-delay: 0.8s; }  // アンダーライン
+.c-loading__ink:nth-child(8)  { animation-duration: 0.3s;  animation-delay: 1.95s; } // 手
+.c-loading__ink:nth-child(9)  { animation-duration: 0.3s;  animation-delay: 1.95s; } // 手
+.c-loading__ink:nth-child(10) { animation-duration: 0.35s; animation-delay: 1.85s; } // カタカナ
+.c-loading__ink:nth-child(11) { animation-duration: 0.25s; animation-delay: 1.9s; }  // 右矢印
+
+// 主役の「Tsumugu」筆記：ゆっくり左→右に書く
+.c-loading__ink--word {
+  animation-duration: 1.05s;
+  animation-delay: 0.95s;
+}
+
+$c-word-path: 'M118,206 C130,180 150,165 165,180 C175,192 168,210 185,205 C210,198 205,176 235,178 C255,180 250,205 268,206 C285,207 285,188 300,190 C318,192 315,210 332,206 C345,203 352,196 360,192';
+
+// 「Tsumugu」の筆記先端を追う鉛筆（SVG 座標系＝ viewBox 基準でスケール追従）
+.c-loading__pencil {
+  offset-path: path('#{$c-word-path}');
+  offset-distance: 0%;
+  offset-rotate: 0deg;
+  offset-anchor: 18% 97%; // 鉛筆の芯先を線に乗せる
+  opacity: 0;
+  will-change: offset-distance, opacity;
+  animation: c-loading-pen-in 0.2s ease 0.95s forwards,
+    c-loading-pen-move 1.05s cubic-bezier(0.35, 0, 0.35, 1) 0.95s forwards;
+}
+
+// ノートを開く
+.c-loading.is-opening {
+  .c-loading__inner {
+    opacity: 0;
+  }
+  .c-loading__page--left {
+    transform: rotateY(-115deg);
+  }
+  .c-loading__page--right {
+    transform: rotateY(115deg);
+  }
+}
+
+// 線が伸びる（描かれる）
+@keyframes c-loading-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes c-loading-pen-in {
+  to {
+    opacity: 1;
+  }
+}
+
+// 筆記先端（パスの終点＝ロゴの手元）まで鉛筆が進む
+@keyframes c-loading-pen-move {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  // アニメーションなし：ロゴを最初から全部見せる
+  .c-loading__ink {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+  .c-loading__pencil {
+    display: none;
+  }
+  .c-loading__page {
+    transition: none;
+  }
+}

@@ -1,0 +1,57 @@
+@use 'global' as *;
+
+// 付箋風タグ見出し（強み / サービス内容 / 制作フロー / 自己紹介 で共通）
+.c-sectionTitle {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: rem(24);
+  padding: rem(22) rem(48);
+  line-height: 1;
+  border: 1px solid $color-gray;
+
+  @include mq(under-md) {
+    gap: rem(14);
+    padding: rem(16) rem(24);
+  }
+  background: $color-nearwhite;
+  box-shadow: rem(6) rem(6) 0 $color-shadow;
+  // 左上の緑コーナー三角
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-style: solid;
+    border-width: rem(26) rem(26) 0 0;
+    border-color: $color-green transparent transparent transparent;
+  }
+  // 右上の折れ角
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-style: solid;
+    border-width: rem(18) rem(18) 0 0;
+    border-color: $color-white transparent transparent $color-shadow;
+  }
+}
+
+.c-sectionTitle__ja {
+  font-family: $ff-serif;
+  font-size: rem(32);
+
+  @include mq(under-md) {
+    font-size: rem(26);
+  }
+}
+
+.c-sectionTitle__en {
+  font-family: $ff-en;
+  font-size: rem(24);
+
+  @include mq(under-md) {
+    font-size: rem(20);
+  }
+}

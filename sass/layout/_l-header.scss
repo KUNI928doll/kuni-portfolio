@@ -1,0 +1,20 @@
+@use 'global' as *;
+
+// ロゴ（ページ最上部・中央）
+.l-header {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  justify-content: center;
+  padding-top: rem(12);
+}
+
+.l-header__logo {
+  width: rem(200);
+
+  @include mq(under-md) {
+    width: rem(150);
+  }
+}

@@ -1,0 +1,65 @@
+@use 'global' as *;
+
+// 制作実績カード（一覧で使用・カード全体がリンク）
+.p-workCard {
+  border: 1px solid $color-text;
+  overflow: clip;
+  background: $color-white;
+  border-radius: rem(10);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+
+  @include hover {
+    transform: translateY(rem(-8));
+    box-shadow: rem(6) rem(10) rem(24) rgba($color-text, 0.12);
+
+    .p-workCard__img img {
+      transform: scale(1.05);
+    }
+  }
+}
+.p-workCard__link {
+  display: block;
+  color: $color-text;
+
+  &:focus-visible {
+    outline: 2px solid $color-green;
+    outline-offset: rem(2);
+  }
+}
+.p-workCard__img {
+  aspect-ratio: 3 / 2;
+
+  img {
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+}
+.p-workCard__body {
+  padding: rem(20);
+
+  @include mq(under-md) {
+    padding: rem(14);
+  }
+}
+.p-workCard__cat {
+  padding: rem(4) rem(14);
+  display: inline-flex;
+  align-items: center;
+  font-size: rem(12);
+  font-weight: $fw-medium;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  background: $color-green;
+  border-radius: 100vh;
+}
+.p-workCard__title {
+  margin-top: rem(12);
+  font-family: $ff-serif;
+  font-size: rem(18);
+  line-height: 1.6;
+
+  @include mq(md) {
+    font-size: rem(19);
+  }
+}

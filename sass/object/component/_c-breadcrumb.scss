@@ -1,0 +1,38 @@
+@use 'global' as *;
+
+// パンくず（ホーム ＞ 制作実績 ＞ 記事タイトル）
+.c-breadcrumb {
+  font-size: rem(13);
+  line-height: 1.6;
+  color: $color-gray;
+}
+.c-breadcrumb__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.c-breadcrumb__item {
+  display: flex;
+  align-items: center;
+
+  &:not(:first-child)::before {
+    content: '›';
+    margin-inline: rem(8);
+    color: $color-line;
+  }
+}
+.c-breadcrumb__link {
+  color: $color-gray;
+  transition: color 0.3s ease;
+
+  @include hover {
+    color: $color-text;
+  }
+  &:focus-visible {
+    outline: 2px solid $color-gray;
+    outline-offset: rem(2);
+  }
+}
+.c-breadcrumb__current {
+  color: $color-text;
+}

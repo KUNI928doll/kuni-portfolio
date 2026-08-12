@@ -1,0 +1,40 @@
+@use 'global' as *;
+
+// 汎用ボタン（サイズは配置側が持つ）
+.c-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: rem(18) rem(40);
+  overflow: hidden;
+  font-size: rem(20);
+  line-height: 1;
+  color: $color-text;
+  background: $color-white;
+  border: 1px solid $color-gray;
+  border-radius: rem(8);
+  box-shadow: rem(3) rem(3) 0 $color-shadow;
+  transition: color 0.4s ease;
+  // hover 時に左→右へ色が変わる下地
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    transform: scaleX(0);
+    transform-origin: left center;
+    background: $color-green;
+    transition: transform 0.4s ease;
+  }
+
+  @include hover {
+    &::before {
+      transform: scaleX(1);
+    }
+  }
+  &:focus-visible {
+    outline: 2px solid $color-gray;
+    outline-offset: 2px;
+  }
+}

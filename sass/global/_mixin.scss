@@ -1,0 +1,34 @@
+@use 'sass:map';
+@use 'size' as *;
+
+// ブレークポイント（モバイルファースト = min-width で PC を上書き）
+$breakpoints: (
+  'md': $bp-md,
+  'lg': $bp-lg,
+  'xl': $bp-xl,
+);
+
+@mixin mq($key: 'md') {
+  @if $key == 'under-md' {
+    @media (max-width: #{$bp-md - 0.02px}) {
+      @content;
+    }
+  } @else if $key == 'only-md' {
+    @media (min-width: $bp-md) and (max-width: #{$bp-lg - 0.02px}) {
+      @content;
+    }
+  } @else {
+    @media (min-width: map.get($breakpoints, $key)) {
+      @content;
+    }
+  }
+}
+
+// ホバー（デバイス対応）
+@mixin hover {
+  @media (any-hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+}

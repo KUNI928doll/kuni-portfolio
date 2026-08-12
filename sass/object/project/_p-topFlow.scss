@@ -1,0 +1,170 @@
+@use 'global' as *;
+
+/************************************************************************
+* 制作フロー（5 ステップ・左右交互ジグザグ）
+************************************************************************/
+.p-topFlow {
+  position: relative; // ABS_ANCHOR: __hatch / __branch / __note を absolute で配置
+  padding-block: rem(72) rem(120);
+  overflow-x: clip; // 枝葉・葉ノート装飾の右端はみ出しをクリップ
+}
+// 上部フルブリードの斜線ハッチ
+.p-topFlow__hatch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%; // ABSOLUTE_FILL: フルブリードの斜線ハッチをセクション全幅に伸ばす
+}
+// 右上の枝葉
+.p-topFlow__branch {
+  position: absolute;
+  top: rem(48);
+  right: rem(80);
+  width: rem(72);
+
+  @include mq(under-md) {
+    width: rem(48);
+  }
+}
+// 右下の葉ノート装飾
+.p-topFlow__note {
+  position: absolute;
+  right: rem(40);
+  bottom: rem(72);
+  width: rem(160);
+
+  @include mq(under-md) {
+    width: rem(96);
+  }
+}
+.p-topFlow__list {
+  margin-top: rem(56);
+}
+.p-topFlow__step {
+  position: relative; // ABS_ANCHOR: __num / __connector を absolute で配置
+
+  &:not(:first-child) {
+    margin-top: rem(72);
+  }
+
+  @include mq(lg) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: rem(24);
+    max-width: rem(838);
+    margin-inline: auto;
+  }
+}
+.p-topFlow__step:nth-child(even) {
+  @include mq(lg) {
+    flex-direction: row-reverse;
+  }
+}
+// step5 のカードのみ赤系
+.p-topFlow__step:last-child .p-topFlow__card {
+  background: $color-red;
+}
+// 番号の実寸（デザイン: 1/4/5 は 80、2/3 は 70）
+.p-topFlow__step:nth-child(2) .p-topFlow__num,
+.p-topFlow__step:nth-child(3) .p-topFlow__num {
+  font-size: rem(70);
+}
+// 写真の実寸比・幅（step ごとに異なる）
+.p-topFlow__step:nth-child(1) .p-topFlow__photo {
+  aspect-ratio: 322 / 244;
+
+  @include mq(lg) {
+    width: rem(322);
+  }
+}
+.p-topFlow__step:nth-child(2) .p-topFlow__photo {
+  aspect-ratio: 243 / 182;
+
+  @include mq(lg) {
+    width: rem(243);
+  }
+}
+.p-topFlow__step:nth-child(3) .p-topFlow__photo {
+  aspect-ratio: 237 / 198;
+
+  @include mq(lg) {
+    width: rem(237);
+  }
+}
+.p-topFlow__card {
+  position: relative; // ABS_ANCHOR: __num を absolute で配置
+  padding: rem(44) rem(48) rem(40);
+  border-radius: rem(8);
+  background: $color-green;
+
+  @include mq(lg) {
+    flex: 0 0 rem(468);
+    padding: rem(48) rem(56) rem(44);
+  }
+}
+.p-topFlow__num {
+  position: absolute;
+  top: rem(-38);
+  left: rem(20);
+  color: $color-gray;
+  font-family: $ff-script;
+  font-size: rem(80);
+  line-height: 1;
+}
+.p-topFlow__body {
+  > :not(:first-child) {
+    margin-top: rem(16);
+  }
+}
+.p-topFlow__stepTitle {
+  font-family: $ff-serif;
+  font-weight: $fw-medium;
+  font-size: rem(20);
+  line-height: 1.8;
+  text-align: center;
+}
+.p-topFlow__checkItem {
+  position: relative; // ABS_ANCHOR: ドットマーカー ::before の基準
+  padding-left: rem(20);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: rem(15);
+    left: rem(2);
+    width: rem(7);
+    aspect-ratio: 1;
+    background: $color-gray;
+    border-radius: 50%;
+  }
+}
+.p-topFlow__photo {
+  margin-top: rem(24);
+  margin-inline: auto;
+  width: rem(240);
+  overflow: clip;
+  border-radius: rem(10);
+
+  img {
+    aspect-ratio: inherit;
+    object-fit: cover;
+  }
+
+  @include mq(lg) {
+    margin-top: 0;
+    margin-inline: 0;
+  }
+}
+// step 間をつなぐ曲線コネクタ（装飾・lg 以上のみ）
+.p-topFlow__connector {
+  display: none;
+
+  @include mq(lg) {
+    position: absolute;
+    bottom: rem(-72);
+    left: rem(110);
+    display: block;
+    width: rem(140);
+  }
+}

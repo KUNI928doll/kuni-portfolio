@@ -1,0 +1,279 @@
+@use 'global' as *;
+
+/************************************************************************
+* サービス内容（Service）— 2 円ベン図
+* PC(lg 以上): デザイン幅 1366 基準の canvas 絶対配置（vw で等比スケール）
+* SP: 2 枚のカードに縦積み
+************************************************************************/
+
+.p-topService {
+  position: relative;
+  padding-block: rem(60) rem(100);
+  overflow-x: clip;
+  // 上部の曲線の糸装飾（full-bleed・境界をまたぐ）
+  &::before {
+    content: '';
+    position: absolute;
+    top: rem(-180);
+    left: 0;
+    z-index: 0;
+    width: 100%;
+    aspect-ratio: 1366 / 295;
+    background: url(../img/service-divider.svg) center / 100% 100% no-repeat;
+    pointer-events: none;
+  }
+}
+
+// 見出し + リード
+.p-topService__head {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: rem(24);
+
+  @include mq(md) {
+    flex-direction: row;
+    align-items: center;
+    gap: rem(48);
+  }
+}
+
+.p-topService__lead {
+  font-size: rem(16);
+  line-height: 1.75;
+}
+
+// ベン図の器（SP: 読みやすい中央幅 / lg: full-bleed の canvas 絶対配置）
+.p-topService__venn {
+  margin-top: rem(40);
+  margin-inline: auto;
+  padding-inline: rem(20);
+  max-width: rem(720);
+
+  @include mq(lg) {
+    position: relative;
+    margin-inline: 0;
+    padding-inline: 0;
+    max-width: none;
+    aspect-ratio: 1366 / 853;
+  }
+}
+
+// 2 つの円（PC は CSS 描画で重ねる / SP は非表示でカード背景に委ねる）
+.p-topService__circle {
+  display: none;
+
+  @include mq(lg) {
+    position: absolute;
+    display: block;
+    border-radius: 50%;
+  }
+}
+
+.p-topService__circle--left {
+  @include mq(lg) {
+    top: vw(52, 1366);
+    left: vw(-85, 1366);
+    width: vw(805, 1366);
+    height: vw(782, 1366);
+    background: $color-red;
+  }
+}
+
+.p-topService__circle--right {
+  @include mq(lg) {
+    top: vw(43, 1366);
+    left: vw(628, 1366);
+    width: vw(834, 1366);
+    height: vw(810, 1366);
+    background: $color-cream;
+  }
+}
+
+// 円の交差部の × マーク（PC のみ）
+.p-topService__cross {
+  display: none;
+
+  @include mq(lg) {
+    position: absolute;
+    top: vw(369, 1366);
+    left: vw(622, 1366);
+    display: block;
+    width: vw(115, 1366);
+  }
+}
+
+// 上部イラスト（ノートPC / 本 / ペン）
+.p-topService__icon {
+  margin-top: rem(48);
+  margin-inline: auto;
+  width: rem(120);
+
+  @include mq(lg) {
+    position: absolute;
+    margin: 0;
+  }
+}
+
+.p-topService__icon--laptop {
+  margin-top: rem(8);
+
+  @include mq(lg) {
+    top: vw(18, 1366);
+    left: vw(185, 1366);
+    width: vw(134, 1366);
+  }
+}
+
+.p-topService__icon--book {
+  @include mq(lg) {
+    top: 0;
+    left: vw(1098, 1366);
+    width: vw(155, 1366);
+  }
+}
+
+.p-topService__icon--pen {
+  @include mq(lg) {
+    top: vw(477, 1366);
+    left: vw(1130, 1366);
+    width: vw(111, 1366);
+  }
+}
+
+// 円の中身（SP はカード）
+.p-topService__col {
+  margin-top: rem(24);
+  padding: rem(36) rem(28);
+  border-radius: rem(32);
+
+  @include mq(lg) {
+    position: absolute;
+    top: vw(181, 1366);
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+}
+
+.p-topService__col--left {
+  background: $color-red;
+
+  @include mq(lg) {
+    left: vw(166, 1366);
+    width: vw(375, 1366);
+  }
+}
+
+.p-topService__col--right {
+  background: $color-cream;
+
+  @include mq(lg) {
+    left: vw(790, 1366);
+    width: vw(390, 1366);
+  }
+}
+
+// 円内の小見出し（Kiwi Maru）+ 点線下線
+.p-topService__subheading {
+  font-family: $ff-serif;
+  font-size: rem(26);
+
+  &::after {
+    content: '';
+    margin-top: rem(14);
+    display: block;
+    width: rem(240);
+    height: rem(3);
+    background-image: radial-gradient(circle at center, $color-gray rem(1.5), transparent rem(1.6));
+    background-position: left center;
+    background-size: rem(11.6) rem(3);
+    background-repeat: repeat-x;
+  }
+
+  @include mq(lg) {
+    font-size: vw(30, 1366);
+
+    &::after {
+      margin-top: vw(18, 1366);
+      width: vw(330, 1366);
+      height: vw(3, 1366);
+      background-size: vw(11.6, 1366) vw(3, 1366);
+    }
+  }
+}
+
+.p-topService__subheading--right {
+  @include mq(lg) {
+    font-size: vw(28, 1366);
+  }
+}
+
+.p-topService__subNote {
+  display: block;
+  font-size: rem(16);
+
+  @include mq(lg) {
+    font-size: vw(20, 1366);
+  }
+}
+
+// 項目リスト（● + テキスト）
+.p-topService__list {
+  margin-top: rem(24);
+
+  @include mq(lg) {
+    margin-top: vw(30, 1366);
+  }
+}
+
+.p-topService__item {
+  position: relative;
+  padding-left: rem(26);
+
+  &:not(:first-child) {
+    margin-top: rem(24);
+  }
+  &::before {
+    content: '';
+    position: absolute;
+    top: rem(9);
+    left: 0;
+    width: rem(12);
+    aspect-ratio: 1;
+    border-radius: 50%;
+  }
+
+  @include mq(lg) {
+    padding-left: vw(30, 1366);
+    font-size: vw(16, 1366);
+
+    &:not(:first-child) {
+      margin-top: vw(28, 1366);
+    }
+    &::before {
+      top: vw(10, 1366);
+      width: vw(15, 1366);
+    }
+  }
+}
+
+// 左円の項目は主行を Medium・● は反対色（クリーム）
+.p-topService__col--left .p-topService__item {
+  font-weight: $fw-medium;
+
+  &::before {
+    background: $color-cream;
+  }
+}
+
+// 右円の ● は反対色（レッド）
+.p-topService__col--right .p-topService__item::before {
+  background: $color-red;
+}
+
+// 主行に続く補足行（Regular）
+.p-topService__itemNote {
+  font-weight: $fw-regular;
+}

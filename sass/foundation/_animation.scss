@@ -1,0 +1,115 @@
+@use 'global' as *;
+
+/************************************************************************
+* 演出（オプトイン: js- フックの付いた要素だけに効く）
+************************************************************************/
+
+// 本体フェードイン
+body {
+  transition: opacity 0.8s ease;
+}
+
+// スクロールで出現（イージングは easeOutExpo 風でふわっと）
+$reveal-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+.js-reveal {
+  opacity: 0;
+  transform: translateY(rem(48));
+  transition: opacity 0.9s $reveal-ease, transform 0.9s $reveal-ease;
+  // グループ自動ステガー（JS が --i を付与）／個別 data-reveal-delay は inline で上書き
+  transition-delay: calc(var(--i, 0) * 110ms);
+  will-change: opacity, transform;
+
+  &.is-shown {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.js-reveal--left {
+  transform: translateX(rem(-56));
+}
+
+.js-reveal--right {
+  transform: translateX(rem(56));
+}
+
+// 円などの拡大出現
+.js-reveal--scale {
+  transform: scale(0.8);
+
+  &.is-shown {
+    transform: none;
+  }
+}
+
+// 下から大きくせり上がる（見出し・画像向け）
+.js-reveal--up {
+  transform: translateY(rem(72));
+}
+
+// ふわっとぼかしから鮮明に（写真・イラスト向け）
+.js-reveal--soft {
+  transform: translateY(rem(32)) scale(0.96);
+  filter: blur(rem(6));
+  transition: opacity 0.9s $reveal-ease, transform 0.9s $reveal-ease, filter 0.9s $reveal-ease;
+
+  &.is-shown {
+    transform: none;
+    filter: none;
+  }
+}
+
+// スクロール連動パララックス（JS が --parallax-y を更新）
+.js-parallax {
+  will-change: transform;
+  transform: translate3d(0, var(--parallax-y, 0), 0);
+}
+
+// 付箋タグ・吹き出しの「ぺたっ」と貼られる出現
+.js-reveal--stamp {
+  transform: scale(0.8) rotate(-3deg);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  &.is-shown {
+    transform: none;
+  }
+}
+
+// FV キャッチ: 1 文字ずつ
+.js-typing__char {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+
+  &.is-shown {
+    opacity: 1;
+  }
+}
+
+// キャッチ完了後に一括表示
+.js-afterTyping {
+  opacity: 0;
+  transition: opacity 0.9s ease;
+
+  &.is-shown {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-reveal,
+  .js-reveal--scale,
+  .js-reveal--stamp,
+  .js-reveal--up,
+  .js-reveal--soft,
+  .js-typing__char,
+  .js-afterTyping {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+  .js-parallax {
+    transform: none;
+  }
+}

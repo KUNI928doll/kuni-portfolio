@@ -1,0 +1,212 @@
+@use 'global' as *;
+
+// お問い合わせフォーム（Contact Form 7 をデザインに馴染ませる）
+// 装飾（紙飛行機）の上でも読めるよう、白いカードで浮かせる
+.c-form {
+  max-width: rem(680);
+  margin-inline: auto;
+  padding: rem(32) rem(24);
+  text-align: left;
+  background: $color-white;
+  border: 1px solid $color-shadow;
+  border-radius: rem(16);
+  box-shadow: rem(4) rem(4) 0 $color-shadow;
+
+  @include mq(md) {
+    padding: rem(48) rem(56);
+  }
+}
+
+// 1 項目
+.c-form__group {
+  & + & {
+    margin-top: rem(24);
+  }
+}
+
+.c-form__label {
+  display: flex;
+  align-items: center;
+  gap: rem(8);
+  margin-bottom: rem(10);
+  font-family: $ff-serif;
+  font-size: rem(16);
+  line-height: 1.5;
+  color: $color-text;
+}
+
+// 必須 / 任意 バッジ
+.c-form__req,
+.c-form__any {
+  display: inline-block;
+  padding: rem(2) rem(8);
+  font-family: $ff-en;
+  font-size: rem(11);
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  border-radius: rem(4);
+}
+.c-form__req {
+  color: $color-white;
+  background: $color-gray;
+}
+.c-form__any {
+  color: $color-gray;
+  background: $color-green;
+}
+
+// 入力欄共通
+.c-form__input,
+.c-form__textarea,
+.c-form__select {
+  width: 100%;
+  padding: rem(12) rem(16);
+  font-family: $ff-sans;
+  font-size: rem(16); // 16px 未満は iOS でズームするため下げない
+  line-height: 1.6;
+  color: $color-text;
+  background: $color-nearwhite;
+  border: 1px solid $color-line;
+  border-radius: rem(8);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  appearance: none;
+
+  &::placeholder {
+    color: $color-line;
+  }
+  &:focus {
+    outline: none;
+    border-color: $color-gray;
+    box-shadow: 0 0 0 rem(3) $color-green;
+  }
+}
+
+.c-form__textarea {
+  min-height: rem(160);
+  resize: vertical;
+}
+
+// セレクト（矢印を自前描画）
+.c-form__selectWrap {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: rem(18);
+    width: rem(9);
+    height: rem(9);
+    border-right: 2px solid $color-gray;
+    border-bottom: 2px solid $color-gray;
+    transform: translateY(-70%) rotate(45deg);
+    pointer-events: none;
+  }
+}
+.c-form__select {
+  padding-right: rem(40);
+  cursor: pointer;
+}
+
+// 同意チェック
+.c-form__consent {
+  margin-top: rem(28);
+  text-align: center;
+  font-size: rem(14);
+  line-height: 1.8;
+
+  a {
+    color: $color-text;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+
+    @include hover {
+      opacity: $opacity;
+    }
+  }
+}
+
+// 送信ボタン（c-btn の見た目に合わせつつ input でも成立させる）
+.c-form__actions {
+  margin-top: rem(32);
+  text-align: center;
+}
+.c-form__submit {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: rem(240);
+  padding: rem(18) rem(48);
+  font-family: $ff-en;
+  font-size: rem(20);
+  line-height: 1;
+  color: $color-text;
+  cursor: pointer;
+  background: $color-white;
+  border: 1px solid $color-gray;
+  border-radius: rem(8);
+  box-shadow: rem(3) rem(3) 0 $color-shadow;
+  transition: color 0.3s ease, background-color 0.4s ease, box-shadow 0.2s ease;
+  appearance: none;
+
+  @include hover {
+    background-color: $color-green;
+  }
+  &:focus-visible {
+    outline: 2px solid $color-gray;
+    outline-offset: 2px;
+  }
+  &:active {
+    box-shadow: rem(1) rem(1) 0 $color-shadow;
+    transform: translate(rem(2), rem(2));
+  }
+  // 送信中は無効表示
+  &:disabled {
+    cursor: wait;
+    opacity: $opacity;
+  }
+}
+
+// ------- Contact Form 7 の状態表示を馴染ませる -------
+
+// バリデーションエラー（各項目の下）
+.wpcf7-not-valid-tip {
+  display: block;
+  margin-top: rem(6);
+  font-size: rem(13);
+  line-height: 1.6;
+  color: #c0553f; // くすみレッド系の警告色
+}
+
+// エラーの入力欄は枠を強調
+.wpcf7-not-valid {
+  border-color: #c0553f !important;
+  box-shadow: 0 0 0 rem(3) rgba(192, 85, 63, 0.12);
+}
+
+// 送信後などの総合メッセージ
+.wpcf7-response-output {
+  margin: rem(24) 0 0 !important;
+  padding: rem(14) rem(18) !important;
+  font-size: rem(14);
+  line-height: 1.8;
+  border-width: 1px !important;
+  border-radius: rem(8);
+}
+.wpcf7-form.sent .wpcf7-response-output {
+  border-color: $color-green !important;
+  background: rgba(229, 239, 235, 0.5);
+  color: $color-text;
+}
+.wpcf7-form.invalid .wpcf7-response-output,
+.wpcf7-form.failed .wpcf7-response-output {
+  border-color: #c0553f !important;
+  background: rgba(241, 228, 226, 0.5);
+  color: #a5432f;
+}
+
+// 送信中スピナー位置
+.wpcf7-spinner {
+  margin: 0 0 0 rem(12);
+}

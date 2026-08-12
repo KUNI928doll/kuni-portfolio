@@ -1,0 +1,49 @@
+@use 'global' as *;
+
+// 下層ページ共通ヒーロー（緑背景・上部にロゴが重なる・下端はクリームの波で本文へ）
+.l-lowerFv {
+  position: relative; // ABS_ANCHOR: ::after の波を絶対配置で底に敷く
+  padding-top: rem(112);
+  padding-bottom: rem(72);
+  text-align: center;
+  background: $color-green;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%; // ABSOLUTE_FILL: 波を親幅いっぱいに敷く
+    aspect-ratio: 1366 / 120;
+    background: $color-cream;
+    mask: url('../img/footer-wave.svg') no-repeat center bottom / 100% 100%;
+    pointer-events: none;
+  }
+
+  @include mq(md) {
+    padding-top: rem(200);
+    padding-bottom: rem(120);
+  }
+}
+.l-lowerFv__en {
+  font-family: $ff-en;
+  font-size: rem(13);
+  font-weight: $fw-medium;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  color: $color-gray;
+
+  @include mq(md) {
+    font-size: rem(15);
+  }
+}
+.l-lowerFv__title {
+  margin-top: rem(10);
+  font-family: $ff-serif;
+  font-size: rem(28);
+  line-height: 1.4;
+
+  @include mq(md) {
+    font-size: rem(40);
+  }
+}

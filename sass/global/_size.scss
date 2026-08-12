@@ -1,0 +1,19 @@
+@use 'function' as *;
+
+// ルート・基準フォントサイズ
+$fz-root: 16px;
+$fz-default: 16;
+$fz-base: rem(16);
+
+// ブレークポイント
+$bp-sp: 375px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+$bp-xl: 1366px;
+
+// レイアウト（デザイン幅 1366 でロック・コンテンツ中央幅 約1064）
+$layout-sp-vw: $bp-sp;
+$layout-width-container: $bp-xl;
+$layout-width-content: rem(1064);
+$layout-padding-inline: rem(24);
+$layout-padding-inline-sp: rem(20);

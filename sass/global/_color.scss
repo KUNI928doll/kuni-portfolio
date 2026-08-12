@@ -1,0 +1,17 @@
+// カラーパレット（Figma styles.json 由来）
+$color-text: #303030; // 黒（本文・見出し）
+$color-gray: #7d7a7a; // 灰色（補助テキスト）
+$color-white: #ffffff; // 白
+$color-nearwhite: #fffcfc; // ほぼ白
+
+$color-green: #e5efeb; // くすみグリーン（header / contact 背景）
+$color-red: #f1e4e2; // くすみレッド（service 左円 / flow 赤カード）
+$color-cream: #fdfaec; // 明るめクリーム（works / about 背景）
+$color-cream-dim: rgba(244, 242, 230, 0.5); // くすみクリーム 50%
+$color-shadow: #f0edeb; // 影
+
+$color-line: #b5b2b2; // 経歴などの薄い罫線
+
+// 用途エイリアス
+$color-bg: $color-white;
+$light-gray: #f5f5f5;

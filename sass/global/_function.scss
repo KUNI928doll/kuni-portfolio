@@ -1,0 +1,30 @@
+@use 'sass:math';
+@use 'sass:meta';
+
+// 単位を除去して数値だけ返す
+@function strip-unit($value) {
+  @if meta.type-of($value) == 'number' and not math.is-unitless($value) {
+    @return math.div($value, ($value * 0 + 1));
+  }
+  @return $value;
+}
+
+// px を rem に変換（ルート 16px 基準）
+@function rem($px) {
+  @return math.div(strip-unit($px), 16) * 1rem;
+}
+
+// px を em に変換（$base はその要素の font-size）
+@function em($px, $base) {
+  @return math.div(strip-unit($px), strip-unit($base)) * 1em;
+}
+
+// px をビューポート幅基準の vw に変換
+@function vw($px, $base) {
+  @return math.div(strip-unit($px), strip-unit($base)) * 100vw;
+}
+
+// px 指定の line-height を比率へ
+@function lh($lineHeight, $fontSize) {
+  @return math.div(strip-unit($lineHeight), strip-unit($fontSize));
+}

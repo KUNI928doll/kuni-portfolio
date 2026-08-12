@@ -1,0 +1,25 @@
+@use 'global' as *;
+
+// フッター（ロゴ中央・白背景）
+.l-footer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding-block: rem(24) rem(40);
+  background: $color-white;
+  // 上端の波（お問い合わせの緑背景へ食い込む near-white の波型遷移）
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 100%;
+    width: 100%;
+    aspect-ratio: 1366 / 120;
+    background: url('../img/footer-wave.svg') no-repeat bottom center / 100% 100%;
+    pointer-events: none;
+  }
+}
+
+.l-footer__logo {
+  width: rem(200);
+}

@@ -1,0 +1,164 @@
+@use 'sass:math';
+@use 'global' as *;
+
+html {
+  // scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+
+  font-size: $fz-root;
+
+  //~375px
+  @media (max-width: $layout-sp-vw) {
+    font-size: vw($fz-default, $layout-sp-vw);
+    font-size: calc(var(--vw-unitless) / strip-unit($layout-sp-vw) * $fz-root);
+  }
+
+  @include mq(md) {
+    font-size: vw($fz-default, $layout-width-container);
+    font-size: calc(var(--vw-unitless) / strip-unit($layout-width-container) * $fz-root);
+  }
+
+  @media (min-width: $layout-width-container) {
+    font-size: $fz-root;
+  }
+}
+
+button {
+  color: $color-text;
+}
+
+/************************************************************************
+* layout
+************************************************************************/
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {}
+
+main {
+  flex: 1;
+}
+
+footer {
+  margin-top: auto;
+}
+
+
+/************************************************************************
+* base
+************************************************************************/
+a[target='_blank']:not([class]) {
+  transition: color 0.3s;
+
+  &::after {
+    display: inline-block;
+    margin-left: em(13, 17);
+    content: '';
+    font-weight: 900;
+    width: em(14.5, 17);
+    height: em(13, 17);
+    mask-image: url('../img/common/icon-outerLink.svg');
+    mask-repeat: no-repeat;
+    background-color: currentColor;
+  }
+}
+
+a:not([class]) {
+  color: #03c;
+
+  &:visited {
+    color: #639;
+  }
+
+  @media (any-hover: hover) {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &:focus-visible {
+    text-decoration: underline;
+  }
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  min-width: 100%;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  table-layout: fixed;
+}
+
+thead {}
+
+tbody {}
+
+th,
+td {
+  border: 1px solid;
+}
+
+th {}
+
+address {
+  font-style: normal;
+}
+
+
+details {}
+
+summary {
+  .icon {
+    display: block;
+    aspect-ratio: 1;
+    width: rem(24);
+    position: relative;
+
+    &::before,
+    &::after {
+      content: '';
+      height: 1px;
+      width: rem(13);
+      background-color: $color-text;
+      position: absolute;
+      inset: 0;
+      margin: auto;
+    }
+
+    &::after {
+      transform: rotate(90deg);
+      transition: transform 0.3s;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid #007bff;
+  }
+}
+
+details[open] > summary .icon::after {
+  transform: rotate(0);
+}
+
+details.is-closing[open] > summary .icon::after {
+  transform: rotate(90deg);
+}
+
+summary {
+  display: block;
+  cursor: pointer;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+/************************************************************************
+* end base
+************************************************************************/
