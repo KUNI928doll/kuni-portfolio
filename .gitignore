@@ -1,2 +1,8 @@
+.ai-coding/
+.tmp/
 node_modules/
 .DS_Store
+_preview/
+design/
+figma-snapshot/
+.mcp.json
