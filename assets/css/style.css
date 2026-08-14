@@ -1308,10 +1308,14 @@ body.is-loaded .p-nav__item:nth-child(6) {
 .p-fv__mark::before {
   content: "";
   position: absolute;
-  inset: -0.0666666667em -0.3666666667em;
+  top: 50%;
+  right: -0.3333333333em;
+  left: -0.3333333333em;
   z-index: -1;
+  height: 1.2em;
   background: #f1e4e2;
   border-radius: 100vh;
+  transform: translateY(-50%);
 }
 
 .p-fv__photo {

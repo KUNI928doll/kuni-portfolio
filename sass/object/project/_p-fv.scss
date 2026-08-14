@@ -91,13 +91,19 @@
   position: relative;
   isolation: isolate;
 
+  // Safari は line-height 基準の行ボックスで inset を解釈するため、
+  // 高さを文字基準で固定し top:50% + translateY で中央に載せる
   &::before {
     content: '';
     position: absolute;
-    inset: em(-2, 30) em(-11, 30);
+    top: 50%;
+    right: em(-10, 30);
+    left: em(-10, 30);
     z-index: -1;
+    height: em(36, 30);
     background: $color-red;
     border-radius: 100vh;
+    transform: translateY(-50%);
   }
 }
 
