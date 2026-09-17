@@ -24,13 +24,13 @@ add_action('wp_enqueue_scripts', function () {
 });
 
 /**
- * ページタイトル（<title>）：サイト名を「Tsumugu」にし、トップは肩書きを添える
+ * ページタイトル（<title>）：サイト名を「＜.Tsumugu＞」にし、トップは肩書きを添える
  */
 add_filter('document_title_parts', function ($parts) {
   if (is_front_page()) {
-    return ['title' => 'Tsumugu（ツムグ）', 'tagline' => '伴走型Webコーダーのポートフォリオ'];
+    return ['title' => '＜.Tsumugu＞', 'tagline' => '伴走型Webコーダーのポートフォリオ'];
   }
-  $parts['site'] = 'Tsumugu';
+  $parts['site'] = '＜.Tsumugu＞';
   return $parts;
 });
 add_filter('document_title_separator', function () {
@@ -42,8 +42,8 @@ add_filter('document_title_separator', function () {
  * SEO プラグインを入れる場合は、重複しないようこの出力を外すこと
  */
 add_action('wp_head', function () {
-  $site_name = 'Tsumugu（ツムグ）';
-  $default_desc = 'つくるだけで終わらせない、伴走型Webコーダー Tsumugu のポートフォリオ。HTML / CSS / WordPress のコーディングから進行サポートまで、制作会社様・デザイナー様からの外注・部分依頼に対応しています。';
+  $site_name = '＜.Tsumugu＞';
+  $default_desc = 'つくるだけで終わらせない、伴走型Webコーダー ＜.Tsumugu＞ のポートフォリオ。HTML / CSS / WordPress のコーディングから進行サポートまで、制作会社様・デザイナー様からの外注・部分依頼に対応しています。';
   $img = get_theme_file_uri('/assets/img');
 
   $title = wp_get_document_title();
@@ -67,7 +67,7 @@ add_action('wp_head', function () {
     }
   } elseif (is_post_type_archive('works')) {
     $url = get_post_type_archive_link('works');
-    $desc = 'Tsumugu の制作実績一覧。WordPress オリジナルテーマ構築・LP コーディングなど、実装のポイントやコードの一部も紹介しています。';
+    $desc = '＜.Tsumugu＞ の制作実績一覧。WordPress オリジナルテーマ構築・LP コーディングなど、実装のポイントやコードの一部も紹介しています。';
   }
   $desc = wp_html_excerpt($desc, 120, '…');
 
