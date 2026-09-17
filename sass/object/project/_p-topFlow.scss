@@ -39,6 +39,11 @@
 }
 .p-topFlow__list {
   margin-top: rem(56);
+
+  // SP は番号①が見出しタグの影に接するため間隔を広げる
+  @include mq(under-md) {
+    margin-top: rem(72);
+  }
 }
 .p-topFlow__step {
   position: relative; // ABS_ANCHOR: __num / __connector を absolute で配置
@@ -98,6 +103,11 @@
   border-radius: rem(8);
   background: $color-green;
 
+  // SP は本文幅を確保するため左右の余白を詰める
+  @include mq(under-md) {
+    padding-inline: rem(24);
+  }
+
   @include mq(lg) {
     flex: 0 0 rem(468);
     padding: rem(48) rem(56) rem(44);
@@ -123,21 +133,57 @@
   font-size: rem(20);
   line-height: 1.8;
   text-align: center;
+
+  @include mq(under-md) {
+    font-size: rem(18);
+  }
+}
+// PC 用の改行は SP で中途半端な位置の折り返しになるため解除
+.p-topFlow__text br {
+  @include mq(under-md) {
+    display: none;
+  }
 }
 .p-topFlow__checkItem {
-  position: relative; // ABS_ANCHOR: ドットマーカー ::before の基準
-  padding-left: rem(20);
+  position: relative; // ABS_ANCHOR: チェックボックス ::before / チェック ::after の基準
+  padding-left: rem(28);
 
+  // チェックボックス
   &::before {
     content: '';
     position: absolute;
-    top: rem(15);
-    left: rem(2);
-    width: rem(7);
+    top: rem(10);
+    left: 0;
+    width: rem(16);
     aspect-ratio: 1;
-    background: $color-gray;
-    border-radius: 50%;
+    background: $color-white;
+    border: 1.5px solid $color-gray;
+    border-radius: rem(3);
   }
+  // チェックマーク（ステップが表示されたら 1 項目ずつ入る）
+  &::after {
+    content: '';
+    position: absolute;
+    top: rem(9);
+    left: rem(5.5);
+    width: rem(6);
+    height: rem(11);
+    border-right: 2px solid $color-green-dark;
+    border-bottom: 2px solid $color-green-dark;
+    opacity: 0;
+    transform: rotate(45deg) scale(0.3);
+    transform-origin: 70% 90%;
+    transition: opacity 0.2s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @for $i from 1 through 6 {
+    &:nth-child(#{$i})::after {
+      transition-delay: #{0.6 + ($i - 1) * 0.25}s;
+    }
+  }
+}
+.p-topFlow__step.is-shown .p-topFlow__checkItem::after {
+  opacity: 1;
+  transform: rotate(45deg) scale(1);
 }
 .p-topFlow__photo {
   margin-top: rem(24);
@@ -167,4 +213,22 @@
     display: block;
     width: rem(140);
   }
+}
+
+// 手書き数字をカードの表示後に左→右へ書く（筆記体のはみ出しは切らない）
+.p-topFlow__num {
+  clip-path: inset(-30% 100% -30% -30%);
+  transition: clip-path 0.9s cubic-bezier(0.45, 0, 0.2, 1) 0.35s;
+}
+.p-topFlow__step.is-shown .p-topFlow__num {
+  clip-path: inset(-30% -30% -30% -30%);
+}
+
+// ---------- 4. ステップ間の曲線を上から伸ばす（lg のみ表示） ----------
+.p-topFlow__connector img {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1.1s cubic-bezier(0.45, 0, 0.2, 1) 0.7s;
+}
+.p-topFlow__step.is-shown .p-topFlow__connector img {
+  clip-path: inset(0);
 }

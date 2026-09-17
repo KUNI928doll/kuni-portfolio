@@ -55,3 +55,103 @@
     font-size: rem(20);
   }
 }
+
+// ---------- 付箋を「くるくる → ペタッ」と貼る出現（.js-reveal--stamp と組み合わせて使用） ----------
+// 丸まった付箋（左端の筒 __curl）が左→右へ転がりながら広がり、最後に押しつけて貼りつく
+// --unroll（0%→100%）で「見えている幅」と「筒の位置」を同時に動かす
+@property --unroll {
+  syntax: '<percentage>';
+  inherits: true;
+  initial-value: 100%;
+}
+
+$curl-size: rem(24);
+
+.c-sectionTitle__curl {
+  display: none;
+}
+
+.c-sectionTitle.js-reveal--stamp {
+  transform: none;
+  transition: none;
+
+  &.is-shown {
+    animation: c-sectionTitle-unroll 1.2s cubic-bezier(0.33, 0, 0.2, 1) both;
+  }
+  // 丸まった部分（筒）：広がった端に付いて右へ転がり、最後に消える
+  &.is-shown .c-sectionTitle__curl {
+    position: absolute;
+    top: rem(-3);
+    bottom: rem(-3);
+    left: calc(var(--unroll) - #{$curl-size} * 0.6);
+    z-index: 3;
+    display: block;
+    width: $curl-size;
+    background: linear-gradient(to right, #dedad6 0%, $color-nearwhite 40%, $color-white 55%, #e4e0dc 100%);
+    border: 1px solid $color-gray;
+    border-radius: 100vh;
+    box-shadow: rem(2) rem(3) rem(4) rgba($color-text, 0.15);
+    pointer-events: none;
+    animation: c-sectionTitle-curl 1.2s ease both;
+  }
+}
+
+@keyframes c-sectionTitle-unroll {
+  0% {
+    --unroll: 0%;
+    opacity: 0;
+    clip-path: inset(rem(-12) calc(100% - var(--unroll)) rem(-12) rem(-12));
+    transform: translateY(rem(-10)) rotate(-4deg);
+    box-shadow: none;
+  }
+  12% {
+    --unroll: 0%;
+    opacity: 1;
+    transform: translateY(rem(-6)) rotate(-3deg);
+  }
+  68% {
+    --unroll: 100%;
+    clip-path: inset(rem(-12) calc(100% - var(--unroll) - #{rem(12)}) rem(-12) rem(-12));
+    transform: translateY(rem(-4)) rotate(-1deg);
+    box-shadow: rem(10) rem(12) rem(12) rgba($color-text, 0.12);
+  }
+  82% {
+    --unroll: 100%;
+    transform: scale(0.97) rotate(0.6deg);
+    box-shadow: rem(1) rem(1) 0 $color-shadow;
+  }
+  100% {
+    --unroll: 100%;
+    opacity: 1;
+    clip-path: inset(rem(-12) rem(-12) rem(-12) rem(-12));
+    transform: none;
+    box-shadow: rem(6) rem(6) 0 $color-shadow;
+  }
+}
+
+// 筒は広がり切る直前に細くなって消える（紙が平らになる）
+@keyframes c-sectionTitle-curl {
+  0%,
+  55% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  68% {
+    opacity: 0;
+    transform: scaleX(0.3);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleX(0.3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .c-sectionTitle.js-reveal--stamp.is-shown,
+  .c-sectionTitle.js-reveal--stamp.is-shown .c-sectionTitle__curl {
+    animation: none;
+  }
+  .c-sectionTitle.js-reveal--stamp.is-shown .c-sectionTitle__curl {
+    display: none;
+  }
+}

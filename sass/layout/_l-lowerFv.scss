@@ -1,28 +1,15 @@
 @use 'global' as *;
 
-// 下層ページ共通ヒーロー（緑背景・上部にロゴが重なる・下端はクリームの波で本文へ）
+// 下層ページ共通ヒーロー（トップの FV と同じく、上端のくすみグリーンの波 + 白背景）
 .l-lowerFv {
-  position: relative; // ABS_ANCHOR: ::after の波を絶対配置で底に敷く
-  padding-top: rem(112);
-  padding-bottom: rem(72);
+  padding-top: rem(140);
+  padding-bottom: rem(48);
   text-align: center;
-  background: $color-green;
-
-  &::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%; // ABSOLUTE_FILL: 波を親幅いっぱいに敷く
-    aspect-ratio: 1366 / 120;
-    background: $color-cream;
-    mask: url('../img/footer-wave.svg') no-repeat center bottom / 100% 100%;
-    pointer-events: none;
-  }
+  background: url('../img/fv-wave-top.svg') center top / 100% auto no-repeat, $color-white;
 
   @include mq(md) {
-    padding-top: rem(200);
-    padding-bottom: rem(120);
+    padding-top: rem(252);
+    padding-bottom: rem(72);
   }
 }
 .l-lowerFv__en {

@@ -50,6 +50,10 @@
     width: rem(260);
     margin-inline: auto;
   }
+  // PC はカードが写真の下に少し潜り込むため、写真を前面に
+  @include mq(md) {
+    z-index: 1;
+  }
 }
 
 .p-topAbout__photo picture img {
@@ -75,9 +79,17 @@
   padding: rem(48) rem(40) rem(56);
   background: url('../img/about-bg.svg') no-repeat center / 100% 100%;
 
+  // PC はカンプ通り、カードを写真の下へ潜らせつつ右へ広げ、本文を幅 688px・上 66px / 左 86px の位置に置く
+  @include mq(md) {
+    margin: rem(-30) rem(-31) 0 rem(-90);
+    padding: rem(66) rem(22) rem(59) rem(86);
+  }
+  // SP は縦長になりブロブが極端に引き伸ばされるため、単色の角丸カードに置き換える
   @include mq(under-md) {
     flex-basis: auto;
     padding: rem(40) rem(24) rem(44);
+    border-radius: rem(16);
+    background: $color-cream;
   }
 }
 
@@ -97,6 +109,7 @@
 }
 
 // 経歴本文。各行の下に薄いグレー罫線（about-lines.svg 由来 #B5B2B2・36px = 2.25em 間隔）
+// PC はカンプ通り、罫線を行の文字の長さだけ引く（下線を行ボックスの下端に合わせる）
 .p-topAbout__career {
   background: repeating-linear-gradient(
     to bottom,
@@ -105,7 +118,20 @@
     $color-line calc(2.25em - 1px),
     $color-line 2.25em
   );
+
+  @include mq(md) {
+    background: none;
+    text-decoration: underline 1px $color-line;
+    text-underline-offset: em(11, 16);
+    text-decoration-skip-ink: none;
+  }
   strong {
     font-weight: $fw-medium;
+  }
+  // PC 用の改行は SP で中途半端な位置の折り返しになるため解除
+  br {
+    @include mq(under-md) {
+      display: none;
+    }
   }
 }

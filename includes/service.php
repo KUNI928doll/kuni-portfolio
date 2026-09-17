@@ -6,6 +6,7 @@
       <h2 class="c-sectionTitle p-topService__title js-reveal js-reveal--stamp">
         <span class="c-sectionTitle__ja">サービス内容</span>
         <span class="c-sectionTitle__en">Service</span>
+        <span class="c-sectionTitle__curl" aria-hidden="true"></span>
       </h2>
       <p class="p-topService__lead">制作会社様・デザイナー様からの<br>コーディング業務の外注・部分依頼に対応しています。</p>
     </div>
@@ -17,7 +18,7 @@
       <img src="<?php echo $img; ?>/service-laptop.svg" alt="" loading="lazy">
     </figure>
     <div class="p-topService__col p-topService__col--left">
-      <h3 class="p-topService__subheading">Web制作・コーディング</h3>
+      <h3 class="p-topService__subheading js-draw">Web制作・コーディング</h3>
       <ul class="p-topService__list">
         <li class="p-topService__item js-reveal" data-reveal-delay="0">LP／Webサイトのコーディング<br><span class="p-topService__itemNote">（HTML / CSS / WordPress 対応）</span></li>
         <li class="p-topService__item js-reveal" data-reveal-delay="120">既存サイトの保守・修正対応<br><span class="p-topService__itemNote">テキスト・画像差し替え、軽微なレイアウト調整など</span></li>
@@ -32,7 +33,7 @@
       <img src="<?php echo $img; ?>/service-pen.svg" alt="" loading="lazy">
     </figure>
     <div class="p-topService__col p-topService__col--right">
-      <h3 class="p-topService__subheading p-topService__subheading--right">進行サポート・業務補助<span class="p-topService__subNote">（オンライン秘書経験を活かした対応）</span></h3>
+      <h3 class="p-topService__subheading p-topService__subheading--right js-draw">進行サポート・業務補助<span class="p-topService__subNote">（オンライン秘書経験を活かした対応）</span></h3>
       <ul class="p-topService__list">
         <li class="p-topService__item js-reveal" data-reveal-delay="0">Slack／Chatworkを使用した進行フォロー・連絡対応</li>
         <li class="p-topService__item js-reveal" data-reveal-delay="120">スケジュール管理・進捗整理</li>

@@ -29,6 +29,7 @@ if (defined('WPCF7_VERSION')) {
         <span class="p-topContact__en">Contact</span>
         <span class="p-topContact__ja">お問い合わせ</span>
       </h2>
+      <p class="p-topContact__lead js-reveal" data-reveal-delay="120">単発のご依頼から継続的なお付き合いまで、<br>状況に合わせて無理なく対応いたします。<br>ちょっとしたご相談だけでも大歓迎です。<br>内容を拝見し、<strong class="p-topContact__leadStrong">2営業日以内</strong>にご連絡いたします。</p>
 
       <div class="p-topContact__form js-reveal" data-reveal-delay="200">
         <?php if ($cf7_form_id) : ?>
@@ -59,8 +60,9 @@ if (defined('WPCF7_VERSION')) {
       </ul>
     </div>
   </div>
-  <figure class="p-topContact__plane js-reveal js-reveal--left" aria-hidden="true">
-    <img class="p-topContact__planeThread" src="<?php echo $img; ?>/contact-plane.svg" alt="" loading="lazy">
-    <img class="p-topContact__planeBody" src="<?php echo $img; ?>/contact-heading-deco.svg" alt="" loading="lazy">
+  <figure class="p-topContact__plane js-draw" aria-hidden="true">
+    <?php // clip-path で隠した状態から描くため lazy にしない（隠れていると読み込まれない） ?>
+    <img class="p-topContact__planeThread" src="<?php echo $img; ?>/contact-plane.svg" alt="">
+    <img class="p-topContact__planeBody" src="<?php echo $img; ?>/contact-heading-deco.svg" alt="">
   </figure>
 </section>

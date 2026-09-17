@@ -63,6 +63,7 @@ $revealDelay = 0;
     <h2 class="c-sectionTitle js-reveal js-reveal--stamp">
       <span class="c-sectionTitle__ja">制作フロー</span>
       <span class="c-sectionTitle__en">Flow</span>
+      <span class="c-sectionTitle__curl" aria-hidden="true"></span>
     </h2>
     <ol class="p-topFlow__list">
       <?php foreach ($steps as $step) : ?>
@@ -87,7 +88,7 @@ $revealDelay = 0;
           <?php if ($step['shot']) : ?>
             <figure class="p-topFlow__photo">
               <picture>
-                <source srcset="<?php echo $img; ?>/<?php echo $step['shot']; ?>">
+                <source srcset="<?php echo $img; ?>/<?php echo str_replace('.png', '.webp', $step['shot']); ?>" type="image/webp">
                 <img src="<?php echo $img; ?>/<?php echo $step['shot']; ?>" alt="<?php echo $step['alt']; ?>" loading="lazy">
               </picture>
             </figure>

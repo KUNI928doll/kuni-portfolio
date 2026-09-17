@@ -10,6 +10,10 @@
   &.is-opened {
     pointer-events: none;
   }
+  // 同じタブで 2 ページ目以降は表示しない（header.php のインラインスクリプトが html に付与）
+  .is-loadingSkip & {
+    display: none;
+  }
 }
 
 // ノートの左右ページ（緑の表紙）。中央（本の背）を軸に開く

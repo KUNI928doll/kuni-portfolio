@@ -2,7 +2,8 @@
 
 .p-topStrength {
   padding-block: rem(160) rem(120);
-  background: url(../img/strength-bg.svg) top center / 100% auto no-repeat;
+  // 上端のノート型の波（曲線より上は制作実績のクリーム・下は白。strength-bg.svg は曲線より上が透過で白が透けるため使わない）
+  background: url(../img/strength-wave-top.svg) top center / 100% auto no-repeat, $color-white;
 }
 
 .p-topStrength__list {
@@ -80,9 +81,25 @@
 
 .p-topStrength__text {
   margin-top: rem(24);
+
+  // PC 用の改行は SP で中途半端な位置の折り返しになるため解除
+  br {
+    @include mq(under-md) {
+      display: none;
+    }
+  }
 }
 
 // 1番目のみ本文の行間が詰まっている（facts: lh 1.625／他は base 2.25）
 .p-topStrength__item:first-child .p-topStrength__text {
   line-height: 1.625;
+}
+
+// 見出し下の点線を、項目が表示されたあと左→右へ書く
+.p-topStrength__head::after {
+  clip-path: inset(-50% 100% -50% 0);
+  transition: clip-path 1s cubic-bezier(0.45, 0, 0.2, 1) 0.5s;
+}
+.p-topStrength__item.is-shown .p-topStrength__head::after {
+  clip-path: inset(-50% 0 -50% 0);
 }

@@ -10,6 +10,11 @@
   position: relative;
   padding-block: rem(60) rem(100);
   overflow-x: clip;
+
+  // 上部の曲線（::before・高さ約 295px）の下に見出しを置く
+  @include mq(md) {
+    padding-top: rem(280);
+  }
   // 上部の曲線の糸装飾（full-bleed・境界をまたぐ）
   &::before {
     content: '';
@@ -21,6 +26,15 @@
     aspect-ratio: 1366 / 295;
     background: url(../img/service-divider.svg) center / 100% 100% no-repeat;
     pointer-events: none;
+
+    // SP は曲線が低くなり強みの本文に被るため、セクション間の余白内へ下げる
+    @include mq(under-md) {
+      top: rem(-90);
+    }
+    // PC はカンプ通り、強みの本文の下〜見出しの上の余白に収め、本文・リード文に被らせない
+    @include mq(md) {
+      top: rem(-110);
+    }
   }
 }
 
@@ -42,6 +56,12 @@
 .p-topService__lead {
   font-size: rem(16);
   line-height: 1.75;
+
+  br {
+    @include mq(under-md) {
+      display: none;
+    }
+  }
 }
 
 // ベン図の器（SP: 読みやすい中央幅 / lg: full-bleed の canvas 絶対配置）
@@ -145,7 +165,7 @@
 // 円の中身（SP はカード）
 .p-topService__col {
   margin-top: rem(24);
-  padding: rem(36) rem(28);
+  padding: rem(36) rem(24);
   border-radius: rem(32);
 
   @include mq(lg) {
@@ -178,7 +198,12 @@
 // 円内の小見出し（Kiwi Maru）+ 点線下線
 .p-topService__subheading {
   font-family: $ff-serif;
-  font-size: rem(26);
+  font-size: rem(22);
+
+  // SP は 1 行に収め、折り返した場合も行間が空きすぎないように
+  @include mq(under-md) {
+    line-height: 1.6;
+  }
 
   &::after {
     content: '';
@@ -212,7 +237,7 @@
 
 .p-topService__subNote {
   display: block;
-  font-size: rem(16);
+  font-size: rem(14);
 
   @include mq(lg) {
     font-size: vw(20, 1366);
@@ -276,4 +301,13 @@
 // 主行に続く補足行（Regular）
 .p-topService__itemNote {
   font-weight: $fw-regular;
+}
+
+// 小見出し下の点線を左→右へ書く
+.p-topService__subheading::after {
+  clip-path: inset(-50% 100% -50% 0);
+  transition: clip-path 1s cubic-bezier(0.45, 0, 0.2, 1) 0.3s;
+}
+.p-topService__subheading.is-shown::after {
+  clip-path: inset(-50% 0 -50% 0);
 }

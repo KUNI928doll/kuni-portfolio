@@ -123,11 +123,16 @@
     @include hover {
       opacity: $opacity;
     }
+    // base の外部リンクアイコン（別窓リンク用）が文中に空白を作るため、同意文では出さない（base と同じ詳細度で上書き）
+    &[target='_blank']::after {
+      content: none;
+    }
   }
 }
 
 // 送信ボタン（c-btn の見た目に合わせつつ input でも成立させる）
 .c-form__actions {
+  position: relative; // ABS_ANCHOR: CF7 のスピナーを absolute で配置
   margin-top: rem(32);
   text-align: center;
 }
@@ -206,7 +211,11 @@
   color: #a5432f;
 }
 
-// 送信中スピナー位置
-.wpcf7-spinner {
-  margin: 0 0 0 rem(12);
+// 送信中スピナー位置（横に並べるとボタンが中央からずれるため、ボタンの下中央に重ねる）
+.c-form__actions .wpcf7-spinner {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin: rem(8) 0 0;
+  translate: -50% 0;
 }

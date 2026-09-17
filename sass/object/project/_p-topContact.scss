@@ -4,7 +4,7 @@
 .p-topContact {
   position: relative;
   isolation: isolate; // このセクション内で z-index を完結させる（装飾を確実に背面へ）
-  padding-block: rem(72) rem(96);
+  padding-block: rem(72) rem(100); // 下端はフッターのノート型の波（l-footer::before）が重なるため広めに確保
   overflow-x: clip;
   // セクション全体をくすみグリーンで塗り（高さに関係なく全面緑）、上端だけ白い波型を重ねる
   background-color: $color-green;
@@ -14,7 +14,7 @@
   background-size: 100% auto;
 
   @include mq(md) {
-    padding-block: rem(100) rem(150);
+    padding-block: rem(100) rem(314);
   }
 }
 .p-topContact__inner {
@@ -36,6 +36,21 @@
   font-family: $ff-serif;
   font-size: rem(32);
   line-height: 1.44;
+}
+// 見出し下の案内文
+.p-topContact__lead {
+  margin-top: rem(28);
+  font-size: rem(13); // SP でも各文が 1 行に収まるサイズ
+  line-height: 2;
+
+  @include mq(md) {
+    margin-top: rem(36);
+    font-size: rem(16);
+  }
+}
+.p-topContact__leadStrong {
+  font-weight: $fw-medium;
+  background: linear-gradient(transparent 60%, rgba($color-white, 0.9) 60%);
 }
 // フォーム本体（CF7）の設置枠
 .p-topContact__form {
@@ -90,7 +105,7 @@
   position: absolute;
   z-index: 0; // 見出し・フォーム（__inner: z-index 1）より背面
   top: rem(150);
-  left: calc(50% - #{rem(700)});
+  left: calc(50% - #{rem(900)}); // 機体が見出しに重ならないよう、見出しの左隣に着地させる
   display: none;
   width: rem(656.5);
 
@@ -103,4 +118,26 @@
   top: rem(-30.9);
   left: rem(505.5);
   width: rem(265.7);
+}
+
+// 紙飛行機の演出：糸の軌跡を左から描きながら、機体が左下から飛んでくる
+$plane-ease: cubic-bezier(0.45, 0, 0.2, 1);
+
+.p-topContact__planeThread {
+  clip-path: inset(-10% 100% -10% 0);
+  transition: clip-path 1.8s $plane-ease;
+}
+.p-topContact__planeBody {
+  opacity: 0;
+  transform: translate(rem(-460), rem(90)) rotate(-14deg);
+  transition: transform 1.8s $plane-ease, opacity 0.5s ease;
+}
+.p-topContact__plane.is-shown {
+  .p-topContact__planeThread {
+    clip-path: inset(-10% -10% -10% 0);
+  }
+  .p-topContact__planeBody {
+    opacity: 1;
+    transform: none;
+  }
 }

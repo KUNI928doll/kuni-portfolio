@@ -24,6 +24,68 @@ add_action('wp_enqueue_scripts', function () {
 });
 
 /**
+ * ページタイトル（<title>）：サイト名を「Tsumugu」にし、トップは肩書きを添える
+ */
+add_filter('document_title_parts', function ($parts) {
+  if (is_front_page()) {
+    return ['title' => 'Tsumugu（ツムグ）', 'tagline' => '伴走型Webコーダーのポートフォリオ'];
+  }
+  $parts['site'] = 'Tsumugu';
+  return $parts;
+});
+add_filter('document_title_separator', function () {
+  return '｜';
+});
+
+/**
+ * メタ情報（説明文・OGP・Twitter カード・ファビコン）
+ * SEO プラグインを入れる場合は、重複しないようこの出力を外すこと
+ */
+add_action('wp_head', function () {
+  $site_name = 'Tsumugu（ツムグ）';
+  $default_desc = 'つくるだけで終わらせない、伴走型Webコーダー Tsumugu のポートフォリオ。HTML / CSS / WordPress のコーディングから進行サポートまで、制作会社様・デザイナー様からの外注・部分依頼に対応しています。';
+  $img = get_theme_file_uri('/assets/img');
+
+  $title = wp_get_document_title();
+  $desc = $default_desc;
+  $url = home_url('/');
+  $image = $img . '/ogp.jpg';
+  $type = 'website';
+
+  if (is_singular()) {
+    $url = get_permalink();
+    $type = 'article';
+    $summary = is_singular('works') ? get_post_meta(get_the_ID(), 'works_summary', true) : '';
+    $excerpt = wp_strip_all_tags(get_the_excerpt());
+    if ($summary) {
+      $desc = get_the_title() . '（' . $summary . '）の制作実績。' . $default_desc;
+    } elseif ($excerpt) {
+      $desc = $excerpt;
+    }
+    if (is_singular('works') && has_post_thumbnail()) {
+      $image = get_the_post_thumbnail_url(null, 'large');
+    }
+  } elseif (is_post_type_archive('works')) {
+    $url = get_post_type_archive_link('works');
+    $desc = 'Tsumugu の制作実績一覧。WordPress オリジナルテーマ構築・LP コーディングなど、実装のポイントやコードの一部も紹介しています。';
+  }
+  $desc = wp_html_excerpt($desc, 120, '…');
+
+  printf('<meta name="description" content="%s">' . "\n", esc_attr($desc));
+  printf('<meta property="og:site_name" content="%s">' . "\n", esc_attr($site_name));
+  printf('<meta property="og:type" content="%s">' . "\n", esc_attr($type));
+  printf('<meta property="og:title" content="%s">' . "\n", esc_attr($title));
+  printf('<meta property="og:description" content="%s">' . "\n", esc_attr($desc));
+  printf('<meta property="og:url" content="%s">' . "\n", esc_url($url));
+  printf('<meta property="og:image" content="%s">' . "\n", esc_url($image));
+  echo '<meta property="og:locale" content="ja_JP">' . "\n";
+  echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
+  printf('<link rel="icon" href="%s" sizes="32x32">' . "\n", esc_url($img . '/favicon-32.png'));
+  printf('<link rel="icon" href="%s" sizes="192x192">' . "\n", esc_url($img . '/icon-192.png'));
+  printf('<link rel="apple-touch-icon" href="%s">' . "\n", esc_url($img . '/apple-touch-icon.png'));
+}, 1);
+
+/**
  * 管理バーのスタイル干渉を避ける
  */
 add_filter('show_admin_bar', '__return_false');
@@ -59,14 +121,45 @@ add_action('init', function () {
 });
 
 /**
- * 制作実績の追加フィールド（制作サイト URL）
+ * 制作実績の追加フィールド（詳細ページの情報表に表示。本文は「制作ポイント」として表示）
  */
+function tsumugu_works_fields() {
+  return [
+    'works_summary' => ['label' => 'サイト概要（タイトル下に表示）', 'type' => 'text', 'placeholder' => '横浜を拠点とした観光・予約代行サービス'],
+    'works_client' => ['label' => 'クライアント', 'type' => 'text', 'placeholder' => '〇〇株式会社様'],
+    'works_role' => ['label' => '作業内容（「／」区切りで改行）', 'type' => 'text', 'placeholder' => 'コーディング／WordPress オリジナルテーマ開発'],
+    'works_design' => ['label' => 'デザインカンプ', 'type' => 'text', 'placeholder' => 'Figma（PC / SP）'],
+    'works_period' => ['label' => '制作期間', 'type' => 'text', 'placeholder' => 'コーディング：3週間（トップ1P＋下層5P）'],
+    'works_tools' => ['label' => 'ツール', 'type' => 'text', 'placeholder' => 'Cursor, Figma, GitHub'],
+    'works_tech' => ['label' => '使用言語（カンマ区切り）', 'type' => 'text', 'placeholder' => 'HTML, SCSS, JavaScript'],
+    'works_url' => ['label' => '制作サイト URL', 'type' => 'url', 'placeholder' => 'https://'],
+    'works_url_note' => ['label' => 'URL を載せない場合の表記', 'type' => 'text', 'placeholder' => '非公開（センシティブ商材のため）'],
+    'works_video' => ['label' => 'デモ動画 URL（メディアの mp4。入力するとアイキャッチ画像の代わりに表示）', 'type' => 'url', 'placeholder' => 'https://…/demo.mp4'],
+  ];
+}
+
+/**
+ * 制作実績のタグ（制作カテゴリー）を取得。WordPress などの技術タグは種別タグの後ろに並べる
+ */
+function tsumugu_works_tags($post_id) {
+  $terms = get_the_terms($post_id, 'works_cat');
+  if (!$terms || is_wp_error($terms)) {
+    return [];
+  }
+  usort($terms, function ($a, $b) {
+    return ($a->slug === 'wordpress') <=> ($b->slug === 'wordpress');
+  });
+  return $terms;
+}
+
 add_action('add_meta_boxes', function () {
   add_meta_box('works_meta', '制作情報', function ($post) {
     wp_nonce_field('works_meta_save', 'works_meta_nonce');
-    $url = get_post_meta($post->ID, 'works_url', true);
-    echo '<p><label for="works_url">制作サイト URL</label><br>';
-    echo '<input type="url" id="works_url" name="works_url" value="' . esc_attr($url) . '" style="width:100%" placeholder="https://"></p>';
+    foreach (tsumugu_works_fields() as $key => $field) {
+      $value = get_post_meta($post->ID, $key, true);
+      echo '<p><label for="' . esc_attr($key) . '">' . esc_html($field['label']) . '</label><br>';
+      echo '<input type="' . esc_attr($field['type']) . '" id="' . esc_attr($key) . '" name="' . esc_attr($key) . '" value="' . esc_attr($value) . '" style="width:100%" placeholder="' . esc_attr($field['placeholder']) . '"></p>';
+    }
   }, 'works', 'side');
 });
 
@@ -77,8 +170,11 @@ add_action('save_post_works', function ($post_id) {
   if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
     return;
   }
-  if (isset($_POST['works_url'])) {
-    update_post_meta($post_id, 'works_url', esc_url_raw($_POST['works_url']));
+  foreach (tsumugu_works_fields() as $key => $field) {
+    if (isset($_POST[$key])) {
+      $value = $field['type'] === 'url' ? esc_url_raw($_POST[$key]) : sanitize_text_field($_POST[$key]);
+      update_post_meta($post_id, $key, $value);
+    }
   }
 });
 
@@ -105,6 +201,12 @@ add_action('save_post_page', function ($post_id) {
     update_post_meta($post_id, 'en_label', sanitize_text_field($_POST['en_label']));
   }
 });
+
+/**
+ * Contact Form 7 の自動整形（<p> / <br> の挿入）を無効化
+ * フォームは c-form のマークアップで組んでいるため、余計な改行でラベルと入力欄の間が空くのを防ぐ
+ */
+add_filter('wpcf7_autop_or_not', '__return_false');
 
 /**
  * 制作実績アーカイブの表示件数
