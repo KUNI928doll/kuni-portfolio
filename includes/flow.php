@@ -16,8 +16,8 @@ $steps = [
     'lead'  => '制作に入る前に、チェック表を用いて内容を確認します。',
     'list'  => ['PC / SPデザインの有無', 'ページ構成・見出し階層', '実装範囲・優先順位', '納期・進行スケジュール'],
     'close' => '認識のズレを防ぎ、スムーズな進行を目指します。',
-    'shot'  => 'flow-shot-02.png',
-    'alt'   => 'カラー付箋を使った制作前チェック表',
+    'shot'  => 'flow-check-before.png',
+    'alt'   => '実際に使っているコーディング前・事前準備チェックリスト',
   ],
   [
     'num'   => '3',
@@ -25,8 +25,8 @@ $steps = [
     'lead'  => 'デザインの意図や世界観を大切にしながら、<br>HTML / CSS / WordPress にて丁寧にコーディングを行います。<br>進捗は随時共有し、ご確認いただきながら進めます。',
     'list'  => [],
     'close' => '',
-    'shot'  => 'flow-shot-03.png',
-    'alt'   => 'HTML・CSS・WordPress でコーディングを行うイメージ',
+    'shot'  => 'flow-code-scss.png',
+    'alt'   => '変数を一元管理した SCSS の実装画面',
   ],
   [
     'num'   => '4',
@@ -34,8 +34,8 @@ $steps = [
     'lead'  => '納品前にチェック表を用いて最終確認を行います。',
     'list'  => ['レスポンシブ表示', '表示崩れ・リンク・動作確認', '構造や設定漏れの確認'],
     'close' => '安心して公開できる状態に整えます。',
-    'shot'  => '',
-    'alt'   => '',
+    'shot'  => 'flow-check-delivery.png',
+    'alt'   => '実際に使っている納品前チェックシート',
   ],
   [
     'num'   => '5',
@@ -86,11 +86,20 @@ $revealDelay = 0;
             </div>
           </div>
           <?php if ($step['shot']) : ?>
-            <figure class="p-topFlow__photo">
+            <?php $is_check = strpos($step['shot'], 'flow-check-') === 0; ?>
+            <figure class="p-topFlow__photo<?php echo $is_check ? ' p-topFlow__photo--check' : ''; ?>">
+              <?php if ($is_check) : ?>
+                <?php // チェック表は文字が細かいので、別タブで原寸を開けるようにする ?>
+                <a class="p-topFlow__photoLink" href="<?php echo $img; ?>/<?php echo $step['shot']; ?>" target="_blank" rel="noopener noreferrer">
+              <?php endif; ?>
               <picture>
                 <source srcset="<?php echo $img; ?>/<?php echo str_replace('.png', '.webp', $step['shot']); ?>" type="image/webp">
                 <img src="<?php echo $img; ?>/<?php echo $step['shot']; ?>" alt="<?php echo $step['alt']; ?>" loading="lazy">
               </picture>
+              <?php if ($is_check) : ?>
+                </a>
+                <figcaption class="p-topFlow__photoCaption">クリックで拡大</figcaption>
+              <?php endif; ?>
             </figure>
           <?php endif; ?>
           <?php if ($step['num'] !== '5') : ?>
