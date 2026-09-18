@@ -209,6 +209,37 @@ add_action('save_post_page', function ($post_id) {
 add_filter('wpcf7_autop_or_not', '__return_false');
 
 /**
+ * お問い合わせフォームの簡易スパム対策（API キー不要）
+ * 1. 人には見えない入力欄（ハニーポット）に何か入っていたらスパム扱い
+ * 2. 表示から 4 秒未満で送信されたらスパム扱い（自動送信対策）
+ * reCAPTCHA / Akismet を導入する場合は、この処理と併用して問題ない
+ */
+add_action('wpcf7_init', function () {
+  wpcf7_add_form_tag('tsumugu_trap', function () {
+    $nonce = time();
+    return '<span class="c-form__trap" aria-hidden="true">'
+      . '<label>この欄は入力しないでください<input type="text" name="tsumugu-website" value="" tabindex="-1" autocomplete="off"></label>'
+      . '<input type="hidden" name="tsumugu-loaded-at" value="' . esc_attr($nonce) . '">'
+      . '</span>';
+  });
+});
+
+add_filter('wpcf7_spam', function ($spam, $submission = null) {
+  if ($spam) {
+    return $spam;
+  }
+  $posted = isset($_POST['tsumugu-website']) ? trim((string) $_POST['tsumugu-website']) : '';
+  if ($posted !== '') {
+    return true;
+  }
+  $loaded_at = isset($_POST['tsumugu-loaded-at']) ? (int) $_POST['tsumugu-loaded-at'] : 0;
+  if ($loaded_at && (time() - $loaded_at) < 4) {
+    return true;
+  }
+  return $spam;
+}, 10, 2);
+
+/**
  * 制作実績アーカイブの表示件数
  */
 add_action('pre_get_posts', function ($query) {
