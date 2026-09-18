@@ -86,6 +86,109 @@ add_action('wp_head', function () {
 }, 1);
 
 /**
+ * Google アナリティクス（GA4）
+ * ログイン中のユーザー・管理画面・プレビューでは計測しない
+ */
+add_action('wp_head', function () {
+  $id = 'G-B2CLMM8S7Z';
+  if (is_admin() || is_user_logged_in() || is_preview() || is_customize_preview()) {
+    return;
+  }
+  ?>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo esc_attr($id); ?>"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '<?php echo esc_js($id); ?>');
+  </script>
+  <?php
+}, 4);
+
+/**
+ * canonical（正規 URL）
+ * WordPress は個別ページにしか出力しないため、トップ・一覧にも自前で出す
+ */
+add_action('wp_head', function () {
+  if (is_singular()) {
+    return; // WordPress 本体が出力する
+  }
+  $url = '';
+  if (is_front_page()) {
+    $url = home_url('/');
+  } elseif (is_post_type_archive()) {
+    $url = get_post_type_archive_link(get_query_var('post_type'));
+  } elseif (is_tax() || is_category() || is_tag()) {
+    $term = get_queried_object();
+    $url = $term ? get_term_link($term) : '';
+  }
+  if ($url && !is_wp_error($url)) {
+    printf('<link rel="canonical" href="%s">' . "\n", esc_url($url));
+  }
+}, 2);
+
+/**
+ * 構造化データ（JSON-LD）
+ * トップ: サイト情報 + 制作者情報 / 制作実績の詳細: 制作物として記述
+ */
+add_action('wp_head', function () {
+  $site_name = '＜.Tsumugu＞';
+  $person = [
+    '@type' => 'Person',
+    'name' => $site_name,
+    'alternateName' => 'Tsumugu（ツムグ）',
+    'jobTitle' => 'Web コーダー',
+    'url' => home_url('/'),
+    'sameAs' => [
+      'https://x.com/KUNI_webdesign',
+      'https://www.instagram.com/pon8doll/',
+    ],
+  ];
+
+  $data = null;
+  if (is_front_page()) {
+    $data = [
+      '@context' => 'https://schema.org',
+      '@graph' => [
+        [
+          '@type' => 'WebSite',
+          'name' => $site_name,
+          'url' => home_url('/'),
+          'inLanguage' => 'ja',
+          'author' => $person,
+        ],
+        $person,
+      ],
+    ];
+  } elseif (is_singular('works')) {
+    $work = [
+      '@context' => 'https://schema.org',
+      '@type' => 'CreativeWork',
+      'name' => get_the_title(),
+      'url' => get_permalink(),
+      'inLanguage' => 'ja',
+      'creator' => $person,
+    ];
+    $summary = get_post_meta(get_the_ID(), 'works_summary', true);
+    if ($summary) {
+      $work['description'] = $summary;
+    }
+    if (has_post_thumbnail()) {
+      $work['image'] = get_the_post_thumbnail_url(null, 'large');
+    }
+    $tech = array_filter(array_map('trim', preg_split('/[,、，]/u', (string) get_post_meta(get_the_ID(), 'works_tech', true))));
+    if ($tech) {
+      $work['keywords'] = implode(', ', $tech);
+    }
+    $data = $work;
+  }
+
+  if ($data) {
+    echo '<script type="application/ld+json">' . wp_json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . '</script>' . "\n";
+  }
+}, 3);
+
+/**
  * 管理バーのスタイル干渉を避ける
  */
 add_filter('show_admin_bar', '__return_false');
