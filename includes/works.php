@@ -26,8 +26,22 @@ $revealDelay = 0;
                 <?php if ($work_video) : ?>
                   <video class="p-topWorks__video js-hoverVideo" src="<?php echo esc_url($work_video); ?>" muted loop playsinline preload="none" aria-hidden="true"></video>
                 <?php endif; ?>
-                <figcaption class="p-topWorks__caption"><?php the_title(); ?></figcaption>
               </figure>
+              <?php $terms = tsumugu_works_tags(get_the_ID()); ?>
+              <?php $client = get_post_meta(get_the_ID(), 'works_client', true); ?>
+              <div class="p-topWorks__body">
+                <?php if ($terms) : ?>
+                  <ul class="p-topWorks__tags">
+                    <?php foreach ($terms as $term) : ?>
+                      <li class="c-tag c-tag--<?php echo esc_attr($term->slug); ?>"><?php echo esc_html($term->name); ?></li>
+                    <?php endforeach; ?>
+                  </ul>
+                <?php endif; ?>
+                <h3 class="p-topWorks__title"><?php the_title(); ?></h3>
+                <?php if ($client) : ?>
+                  <p class="p-topWorks__client"><?php echo esc_html($client); ?></p>
+                <?php endif; ?>
+              </div>
             </a>
           </li>
           <?php $revealDelay += 120; ?>

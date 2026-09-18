@@ -104,6 +104,28 @@
   opacity: 0;
   transition: opacity 0.4s ease;
 }
+.p-topWorks__body {
+  margin-top: rem(14);
+  text-align: center;
+}
+.p-topWorks__tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: rem(6);
+}
+.p-topWorks__title {
+  margin-top: rem(10);
+  font-family: $ff-serif;
+  font-size: rem(16);
+  line-height: 1.6;
+}
+.p-topWorks__client {
+  margin-top: rem(4);
+  font-size: rem(13);
+  line-height: 1.6;
+  color: $color-gray;
+}
 .p-topWorks__more {
   margin-top: rem(80);
   margin-inline: auto;
