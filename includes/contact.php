@@ -44,14 +44,14 @@ if (defined('WPCF7_VERSION')) {
 
       <ul class="p-topContact__sns js-reveal" data-reveal-delay="320">
         <li>
-          <a class="p-topContact__snsLink" href="#" target="_blank" rel="noopener noreferrer" aria-label="X">
+          <a class="p-topContact__snsLink" href="https://x.com/KUNI_webdesign" target="_blank" rel="noopener noreferrer" aria-label="X（旧 Twitter）">
             <span class="p-topContact__snsIcon p-topContact__snsIcon--x">
               <img src="<?php echo $img; ?>/icon-x.png" alt="" loading="lazy">
             </span>
           </a>
         </li>
         <li>
-          <a class="p-topContact__snsLink" href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <a class="p-topContact__snsLink" href="https://www.instagram.com/pon8doll/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
             <span class="p-topContact__snsIcon">
               <img src="<?php echo $img; ?>/icon-instagram.png" alt="" loading="lazy">
             </span>
