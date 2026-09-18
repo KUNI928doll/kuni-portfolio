@@ -12,19 +12,27 @@
   @include mq(lg) {
     margin-top: rem(60);
     display: grid;
-    grid-template-columns: rem(375) rem(375);
+    grid-template-columns: rem(440) rem(440);
     justify-content: center;
-    column-gap: rem(150);
-    row-gap: rem(120);
+    column-gap: rem(64);
+    row-gap: rem(64);
   }
 }
 
 .p-topStrength__item {
   position: relative;
-  padding-top: rem(28);
+  padding: rem(36) rem(24) rem(32);
+  background: $color-nearwhite;
+  border: 1px solid $color-shadow;
+  border-radius: rem(12);
+  box-shadow: rem(4) rem(6) rem(16) rgba($color-text, 0.06);
 
   &:not(:first-child) {
-    margin-top: rem(48);
+    margin-top: rem(32);
+  }
+
+  @include mq(md) {
+    padding: rem(40) rem(32) rem(36);
   }
 
   @include mq(lg) {
@@ -40,8 +48,8 @@
 
 .p-topStrength__mark {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: rem(-14);
+  left: rem(-10);
   width: rem(40);
 }
 

@@ -106,6 +106,7 @@ $reveal-ease: cubic-bezier(0.16, 1, 0.3, 1);
   .p-topFlow__connector img,
   .p-topContact__planeThread,
   .p-topContact__planeBody,
+  .p-topService__divider::before,
   .p-topFlow__checkItem::after {
     opacity: 1 !important;
     clip-path: none !important;

@@ -200,6 +200,38 @@ Tsumugu LP — main
   };
 
   /*-------------------------------------------------------------------
+  SP のハンバーガーメニュー（開閉・Esc で閉じる・リンクで閉じる）
+  --------------------------------------------------------------------*/
+  const initNavToggle = () => {
+    const toggle = document.querySelector('.js-navToggle');
+    const list = document.querySelector('.js-navList');
+    const overlay = document.querySelector('.js-navOverlay');
+    if (!toggle || !list) return;
+
+    const setOpen = (open) => {
+      document.body.classList.toggle('is-navOpen', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
+    };
+
+    toggle.addEventListener('click', () => setOpen(!document.body.classList.contains('is-navOpen')));
+    if (overlay) overlay.addEventListener('click', () => setOpen(false));
+    list.addEventListener('click', (e) => {
+      if (e.target.closest('a')) setOpen(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.body.classList.contains('is-navOpen')) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+    // PC 幅に戻したときに開いたままにしない
+    window.matchMedia('(min-width: 768px)').addEventListener('change', (e) => {
+      if (e.matches) setOpen(false);
+    });
+  };
+
+  /*-------------------------------------------------------------------
   アンカーへのスムーススクロール
   --------------------------------------------------------------------*/
   const initSmoothScroll = () => {
@@ -239,6 +271,7 @@ Tsumugu LP — main
     initReveal();
     initParallax();
     initHoverVideo();
+    initNavToggle();
     initSmoothScroll();
     initTotop();
   });

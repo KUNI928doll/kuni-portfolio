@@ -21,4 +21,4 @@
       </a>
     </div>
   </header>
-  <?php if (is_front_page() || is_post_type_archive('works')) { get_template_part('includes/nav'); } ?>
+  <?php get_template_part('includes/nav'); ?>

@@ -15,26 +15,34 @@
   @include mq(md) {
     padding-top: rem(280);
   }
-  // 上部の曲線の糸装飾（full-bleed・境界をまたぐ）
+}
+
+// 上部の曲線の糸装飾（full-bleed・境界をまたぐ）。表示時に左から描く
+// clip-path は内側の ::before に掛ける（要素自体を隠すと IntersectionObserver が反応しないため）
+.p-topService__divider {
+  position: absolute;
+  top: rem(-90); // SP は曲線が低くなり強みの本文に被るため、セクション間の余白内へ下げる
+  left: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1366 / 295;
+  pointer-events: none;
+
+  // PC はカンプ通り、強みの本文の下〜見出しの上の余白に収め、本文・リード文に被らせない
+  @include mq(md) {
+    top: rem(-110);
+  }
   &::before {
     content: '';
     position: absolute;
-    top: rem(-180);
-    left: 0;
-    z-index: 0;
-    width: 100%;
-    aspect-ratio: 1366 / 295;
+    inset: 0;
     background: url(../img/service-divider.svg) center / 100% 100% no-repeat;
-    pointer-events: none;
-
-    // SP は曲線が低くなり強みの本文に被るため、セクション間の余白内へ下げる
-    @include mq(under-md) {
-      top: rem(-90);
-    }
-    // PC はカンプ通り、強みの本文の下〜見出しの上の余白に収め、本文・リード文に被らせない
-    @include mq(md) {
-      top: rem(-110);
-    }
+    clip-path: inset(-10% 100% -10% 0);
+    transition: clip-path 2s cubic-bezier(0.45, 0, 0.2, 1);
+  }
+  &.is-shown::before {
+    clip-path: inset(-10% -10% -10% 0);
   }
 }
 

@@ -84,17 +84,25 @@
   }
 }
 .p-topFlow__step:nth-child(2) .p-topFlow__photo {
-  aspect-ratio: 243 / 182;
+  aspect-ratio: 986 / 501;
 
   @include mq(lg) {
-    width: rem(243);
+    width: rem(400);
+  }
+}
+// 納品前チェックシート（文字を読めるよう、ほかの写真より大きく出す）
+.p-topFlow__step:nth-child(4) .p-topFlow__photo {
+  aspect-ratio: 1108 / 529;
+
+  @include mq(lg) {
+    width: rem(400);
   }
 }
 .p-topFlow__step:nth-child(3) .p-topFlow__photo {
-  aspect-ratio: 237 / 198;
+  aspect-ratio: 886 / 760;
 
   @include mq(lg) {
-    width: rem(237);
+    width: rem(300);
   }
 }
 .p-topFlow__card {
@@ -191,6 +199,13 @@
   width: rem(240);
   overflow: clip;
   border-radius: rem(10);
+  // チェックリストは文字が細かいので、幅いっぱいに出して白フチを付ける
+  &.p-topFlow__photo--check {
+    width: 100%;
+    padding: rem(8) rem(8) rem(4);
+    background: $color-white;
+    border: 1px solid $color-line;
+  }
 
   img {
     aspect-ratio: inherit;
@@ -231,4 +246,28 @@
 }
 .p-topFlow__step.is-shown .p-topFlow__connector img {
   clip-path: inset(0);
+}
+
+// チェック表の画像リンク（別タブで原寸表示）
+.p-topFlow__photoLink {
+  display: block;
+
+  @include hover {
+    opacity: $opacity;
+  }
+  &:focus-visible {
+    outline: 2px solid $color-gray;
+    outline-offset: rem(2);
+  }
+  // base の外部リンクアイコンは画像の下に出てしまうため消す（base と同じ詳細度で上書き）
+  &[target='_blank']::after {
+    content: none;
+  }
+}
+.p-topFlow__photoCaption {
+  margin-top: rem(4);
+  font-size: rem(11);
+  line-height: 1.5;
+  text-align: right;
+  color: $color-gray;
 }

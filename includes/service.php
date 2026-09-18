@@ -1,6 +1,7 @@
 <?php // includes/service.php — サービス内容セクション（所有ファイル） ?>
 <?php $img = get_theme_file_uri('/assets/img'); ?>
 <section class="p-topService p-top__service" id="service">
+  <span class="p-topService__divider js-draw" aria-hidden="true"></span>
   <div class="l-container">
     <div class="p-topService__head">
       <h2 class="c-sectionTitle p-topService__title js-reveal js-reveal--stamp">
