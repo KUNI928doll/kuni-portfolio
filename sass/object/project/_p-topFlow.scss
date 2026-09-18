@@ -52,7 +52,7 @@
     margin-top: rem(72);
   }
 
-  @include mq(lg) {
+  @include mq(md) {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -62,7 +62,7 @@
   }
 }
 .p-topFlow__step:nth-child(even) {
-  @include mq(lg) {
+  @include mq(md) {
     flex-direction: row-reverse;
   }
 }
@@ -79,14 +79,14 @@
 .p-topFlow__step:nth-child(1) .p-topFlow__photo {
   aspect-ratio: 322 / 244;
 
-  @include mq(lg) {
+  @include mq(md) {
     width: rem(322);
   }
 }
 .p-topFlow__step:nth-child(2) .p-topFlow__photo {
   aspect-ratio: 986 / 501;
 
-  @include mq(lg) {
+  @include mq(md) {
     width: rem(400);
   }
 }
@@ -94,14 +94,14 @@
 .p-topFlow__step:nth-child(4) .p-topFlow__photo {
   aspect-ratio: 1108 / 529;
 
-  @include mq(lg) {
+  @include mq(md) {
     width: rem(400);
   }
 }
 .p-topFlow__step:nth-child(3) .p-topFlow__photo {
   aspect-ratio: 886 / 760;
 
-  @include mq(lg) {
+  @include mq(md) {
     width: rem(300);
   }
 }
@@ -116,7 +116,7 @@
     padding-inline: rem(24);
   }
 
-  @include mq(lg) {
+  @include mq(md) {
     flex: 0 0 rem(468);
     padding: rem(48) rem(56) rem(44);
   }
@@ -212,7 +212,7 @@
     object-fit: cover;
   }
 
-  @include mq(lg) {
+  @include mq(md) {
     margin-top: 0;
     margin-inline: 0;
   }
@@ -221,7 +221,7 @@
 .p-topFlow__connector {
   display: none;
 
-  @include mq(lg) {
+  @include mq(md) {
     position: absolute;
     bottom: rem(-72);
     left: rem(110);

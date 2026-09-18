@@ -9,7 +9,7 @@
 .p-topStrength__list {
   margin-top: rem(56);
 
-  @include mq(lg) {
+  @include mq(md) {
     margin-top: rem(60);
     display: grid;
     grid-template-columns: rem(440) rem(440);
@@ -35,7 +35,7 @@
     padding: rem(40) rem(32) rem(36);
   }
 
-  @include mq(lg) {
+  @include mq(md) {
     &:not(:first-child) {
       margin-top: 0;
     }

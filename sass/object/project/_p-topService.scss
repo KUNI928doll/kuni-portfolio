@@ -79,7 +79,7 @@
   padding-inline: rem(20);
   max-width: rem(720);
 
-  @include mq(lg) {
+  @include mq(md) {
     position: relative;
     margin-inline: 0;
     padding-inline: 0;
@@ -92,7 +92,7 @@
 .p-topService__circle {
   display: none;
 
-  @include mq(lg) {
+  @include mq(md) {
     position: absolute;
     display: block;
     border-radius: 50%;
@@ -100,7 +100,7 @@
 }
 
 .p-topService__circle--left {
-  @include mq(lg) {
+  @include mq(md) {
     top: vw(52, 1366);
     left: vw(-85, 1366);
     width: vw(805, 1366);
@@ -110,7 +110,7 @@
 }
 
 .p-topService__circle--right {
-  @include mq(lg) {
+  @include mq(md) {
     top: vw(43, 1366);
     left: vw(628, 1366);
     width: vw(834, 1366);
@@ -123,7 +123,7 @@
 .p-topService__cross {
   display: none;
 
-  @include mq(lg) {
+  @include mq(md) {
     position: absolute;
     top: vw(369, 1366);
     left: vw(622, 1366);
@@ -133,12 +133,17 @@
 }
 
 // 上部イラスト（ノートPC / 本 / ペン）
+// SP は円（ベン図）がなく、イラストだけが宙に浮いて余白が空くため非表示
 .p-topService__icon {
   margin-top: rem(48);
   margin-inline: auto;
   width: rem(120);
 
-  @include mq(lg) {
+  @include mq(under-md) {
+    display: none;
+  }
+
+  @include mq(md) {
     position: absolute;
     margin: 0;
   }
@@ -147,7 +152,7 @@
 .p-topService__icon--laptop {
   margin-top: rem(8);
 
-  @include mq(lg) {
+  @include mq(md) {
     top: vw(18, 1366);
     left: vw(185, 1366);
     width: vw(134, 1366);
@@ -155,7 +160,7 @@
 }
 
 .p-topService__icon--book {
-  @include mq(lg) {
+  @include mq(md) {
     top: 0;
     left: vw(1098, 1366);
     width: vw(155, 1366);
@@ -163,7 +168,7 @@
 }
 
 .p-topService__icon--pen {
-  @include mq(lg) {
+  @include mq(md) {
     top: vw(477, 1366);
     left: vw(1130, 1366);
     width: vw(111, 1366);
@@ -176,7 +181,7 @@
   padding: rem(36) rem(24);
   border-radius: rem(32);
 
-  @include mq(lg) {
+  @include mq(md) {
     position: absolute;
     top: vw(181, 1366);
     padding: 0;
@@ -188,7 +193,7 @@
 .p-topService__col--left {
   background: $color-red;
 
-  @include mq(lg) {
+  @include mq(md) {
     left: vw(166, 1366);
     width: vw(375, 1366);
   }
@@ -197,7 +202,7 @@
 .p-topService__col--right {
   background: $color-cream;
 
-  @include mq(lg) {
+  @include mq(md) {
     left: vw(790, 1366);
     width: vw(390, 1366);
   }
@@ -225,7 +230,7 @@
     background-repeat: repeat-x;
   }
 
-  @include mq(lg) {
+  @include mq(md) {
     font-size: vw(30, 1366);
 
     &::after {
@@ -238,7 +243,7 @@
 }
 
 .p-topService__subheading--right {
-  @include mq(lg) {
+  @include mq(md) {
     font-size: vw(28, 1366);
   }
 }
@@ -247,7 +252,7 @@
   display: block;
   font-size: rem(14);
 
-  @include mq(lg) {
+  @include mq(md) {
     font-size: vw(20, 1366);
   }
 }
@@ -256,7 +261,7 @@
 .p-topService__list {
   margin-top: rem(24);
 
-  @include mq(lg) {
+  @include mq(md) {
     margin-top: vw(30, 1366);
   }
 }
@@ -278,7 +283,7 @@
     border-radius: 50%;
   }
 
-  @include mq(lg) {
+  @include mq(md) {
     padding-left: vw(30, 1366);
     font-size: vw(16, 1366);
 

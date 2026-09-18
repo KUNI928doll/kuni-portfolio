@@ -7,6 +7,18 @@
   text-align: center;
   background: url('../img/fv-wave-top.svg') center top / 100% auto no-repeat, $color-white;
 
+  // SP は波の高さが画面幅に比例して低くなりロゴがはみ出すため、波は形を保ったまま下げ、
+  // 上側は緑のベタ塗りで埋める（波を縦に引き伸ばさない）
+  @include mq(under-md) {
+    padding-top: rem(196);
+    background-image:
+      url('../img/fv-wave-top.svg'),
+      linear-gradient(to bottom, $color-green rem(100), $color-white rem(100));
+    background-position: center rem(100), left top;
+    background-size: 100% auto, 100% 100%;
+    background-repeat: no-repeat, no-repeat;
+  }
+
   @include mq(md) {
     padding-top: rem(252);
     padding-bottom: rem(72);
