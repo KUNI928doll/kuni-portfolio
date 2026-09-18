@@ -104,20 +104,29 @@
 .p-topContact__plane {
   position: absolute;
   z-index: 0; // 見出し・フォーム（__inner: z-index 1）より背面
-  top: rem(150);
-  left: calc(50% - #{rem(900)}); // 機体が見出しに重ならないよう、見出しの左隣に着地させる
-  display: none;
-  width: rem(656.5);
+  display: block;
+  // SP は見出しの上を、画面幅に収まる大きさで横切らせる
+  top: rem(16);
+  left: calc(50% - #{rem(230)});
+  width: rem(300);
 
   @include mq(md) {
-    display: block;
+    top: rem(150);
+    left: calc(50% - #{rem(900)}); // 機体が見出しに重ならないよう、見出しの左隣に着地させる
+    width: rem(656.5);
   }
 }
 .p-topContact__planeBody {
   position: absolute;
-  top: rem(-30.9);
-  left: rem(505.5);
-  width: rem(265.7);
+  top: rem(-14);
+  left: rem(231);
+  width: rem(121);
+
+  @include mq(md) {
+    top: rem(-30.9);
+    left: rem(505.5);
+    width: rem(265.7);
+  }
 }
 
 // 紙飛行機の演出：糸の軌跡を左から描きながら、機体が左下から飛んでくる
@@ -129,8 +138,12 @@ $plane-ease: cubic-bezier(0.45, 0, 0.2, 1);
 }
 .p-topContact__planeBody {
   opacity: 0;
-  transform: translate(rem(-460), rem(90)) rotate(-14deg);
+  transform: translate(rem(-210), rem(50)) rotate(-14deg); // SP の飛距離
   transition: transform 1.8s $plane-ease, opacity 0.5s ease;
+
+  @include mq(md) {
+    transform: translate(rem(-460), rem(90)) rotate(-14deg);
+  }
 }
 .p-topContact__plane.is-shown {
   .p-topContact__planeThread {

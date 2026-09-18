@@ -2864,22 +2864,31 @@ body.is-loaded .p-fv__pencil {
 .p-topContact__plane {
   position: absolute;
   z-index: 0;
-  top: 9.375rem;
-  left: calc(50% - 56.25rem);
-  display: none;
-  width: 41.03125rem;
+  display: block;
+  top: 1rem;
+  left: calc(50% - 14.375rem);
+  width: 18.75rem;
 }
 @media (min-width: 768px) {
   .p-topContact__plane {
-    display: block;
+    top: 9.375rem;
+    left: calc(50% - 56.25rem);
+    width: 41.03125rem;
   }
 }
 
 .p-topContact__planeBody {
   position: absolute;
-  top: -1.93125rem;
-  left: 31.59375rem;
-  width: 16.60625rem;
+  top: -0.875rem;
+  left: 14.4375rem;
+  width: 7.5625rem;
+}
+@media (min-width: 768px) {
+  .p-topContact__planeBody {
+    top: -1.93125rem;
+    left: 31.59375rem;
+    width: 16.60625rem;
+  }
 }
 
 .p-topContact__planeThread {
@@ -2889,8 +2898,13 @@ body.is-loaded .p-fv__pencil {
 
 .p-topContact__planeBody {
   opacity: 0;
-  transform: translate(-28.75rem, 5.625rem) rotate(-14deg);
+  transform: translate(-13.125rem, 3.125rem) rotate(-14deg);
   transition: transform 1.8s cubic-bezier(0.45, 0, 0.2, 1), opacity 0.5s ease;
+}
+@media (min-width: 768px) {
+  .p-topContact__planeBody {
+    transform: translate(-28.75rem, 5.625rem) rotate(-14deg);
+  }
 }
 
 .p-topContact__plane.is-shown .p-topContact__planeThread {
