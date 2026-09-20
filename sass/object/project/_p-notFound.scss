@@ -1,0 +1,68 @@
+@use 'global' as *;
+
+// 404 ページ（下層ページと同じ上部 + 案内文とボタン）
+.p-notFound {
+  padding-block: rem(64) rem(140); // 下端はフッターのノート型の波が重なるため広めに確保
+  background: url('../img/lower-wave-top.svg') no-repeat top center / 100% auto, $color-cream;
+
+  @include mq(md) {
+    padding-block: rem(120) rem(314);
+  }
+}
+.p-notFound__inner {
+  margin-inline: auto;
+  max-width: rem(760);
+  text-align: center;
+}
+.p-notFound__lead {
+  font-size: rem(15);
+  line-height: 2;
+
+  @include mq(md) {
+    font-size: rem(16);
+  }
+  br {
+    @include mq(under-md) {
+      display: none;
+    }
+  }
+}
+.p-notFound__actions {
+  margin-top: rem(40);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: rem(16);
+
+  @include mq(md) {
+    flex-direction: row;
+    justify-content: center;
+    gap: rem(24);
+  }
+}
+.p-notFound__btn {
+  width: 100%;
+  max-width: rem(320);
+  font-family: $ff-serif;
+  font-size: rem(17);
+  letter-spacing: 0;
+
+  @include mq(md) {
+    width: rem(260);
+  }
+}
+.p-notFound__note {
+  margin-top: rem(32);
+  font-size: rem(14);
+  line-height: 1.9;
+  color: $color-gray;
+
+  a {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+
+    @include hover {
+      opacity: $opacity;
+    }
+  }
+}

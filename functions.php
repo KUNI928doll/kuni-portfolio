@@ -33,6 +33,9 @@ add_filter('document_title_parts', function ($parts) {
   if (is_front_page()) {
     return ['title' => '＜.Tsumugu＞', 'tagline' => '伴走型Webコーダーのポートフォリオ'];
   }
+  if (is_404()) {
+    $parts['title'] = 'ページが見つかりませんでした';
+  }
   $parts['site'] = '＜.Tsumugu＞';
   return $parts;
 });

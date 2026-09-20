@@ -2994,6 +2994,81 @@ body.is-loaded .p-fv__pencil {
   margin-top: 0;
 }
 
+.p-notFound {
+  padding-block: 4rem 8.75rem;
+  background: url("../img/lower-wave-top.svg") no-repeat top center/100% auto, #fdfaec;
+}
+@media (min-width: 768px) {
+  .p-notFound {
+    padding-block: 7.5rem 19.625rem;
+  }
+}
+
+.p-notFound__inner {
+  margin-inline: auto;
+  max-width: 47.5rem;
+  text-align: center;
+}
+
+.p-notFound__lead {
+  font-size: 0.9375rem;
+  line-height: 2;
+}
+@media (min-width: 768px) {
+  .p-notFound__lead {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 767.98px) {
+  .p-notFound__lead br {
+    display: none;
+  }
+}
+
+.p-notFound__actions {
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+@media (min-width: 768px) {
+  .p-notFound__actions {
+    flex-direction: row;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+}
+
+.p-notFound__btn {
+  width: 100%;
+  max-width: 20rem;
+  font-family: "Kiwi Maru", serif;
+  font-size: 1.0625rem;
+  letter-spacing: 0;
+}
+@media (min-width: 768px) {
+  .p-notFound__btn {
+    width: 16.25rem;
+  }
+}
+
+.p-notFound__note {
+  margin-top: 2rem;
+  font-size: 0.875rem;
+  line-height: 1.9;
+  color: #7d7a7a;
+}
+.p-notFound__note a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+@media (any-hover: hover) {
+  .p-notFound__note a:hover {
+    opacity: 0.7;
+  }
+}
+
 .p-workCard {
   border: 1px solid #303030;
   overflow: clip;
