@@ -13,6 +13,7 @@
 </head>
 
 <body <?php body_class('fadeIn'); ?>>
+  <?php wp_body_open(); // GTM の noscript などがここに入る ?>
   <?php get_template_part('includes/loading'); ?>
   <header class="l-header">
     <div class="l-header__logo">

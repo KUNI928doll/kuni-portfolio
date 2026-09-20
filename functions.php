@@ -3,6 +3,9 @@ if (!defined('ABSPATH')) {
   exit;
 }
 
+// Google タグマネージャーのコンテナ ID（計測タグは GTM 側で管理する）
+define('TSUMUGU_GTM_ID', 'GTM-KF5Q2CN7');
+
 /**
  * テーマセットアップ
  */
@@ -86,24 +89,39 @@ add_action('wp_head', function () {
 }, 1);
 
 /**
- * Google アナリティクス（GA4）
- * ログイン中のユーザー・管理画面・プレビューでは計測しない
+ * Google タグマネージャー（GTM）
+ * GA4・Clarity などの計測タグは GTM の管理画面から配信する（テーマには GTM だけ置く）
+ * ログイン中のユーザー・管理画面・プレビューでは読み込まない
  */
+function tsumugu_gtm_enabled() {
+  return !is_admin() && !is_user_logged_in() && !is_preview() && !is_customize_preview();
+}
+
 add_action('wp_head', function () {
-  $id = 'G-B2CLMM8S7Z';
-  if (is_admin() || is_user_logged_in() || is_preview() || is_customize_preview()) {
+  if (!tsumugu_gtm_enabled()) {
     return;
   }
   ?>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo esc_attr($id); ?>"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', '<?php echo esc_js($id); ?>');
-  </script>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','<?php echo esc_js(TSUMUGU_GTM_ID); ?>');</script>
+  <!-- End Google Tag Manager -->
   <?php
 }, 4);
+
+// JavaScript が無効な環境向け（GTM の推奨設置。body 直後に置く）
+add_action('wp_body_open', function () {
+  if (!tsumugu_gtm_enabled()) {
+    return;
+  }
+  printf(
+    '<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=%s" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>' . "\n",
+    esc_attr(TSUMUGU_GTM_ID)
+  );
+});
 
 /**
  * canonical（正規 URL）
