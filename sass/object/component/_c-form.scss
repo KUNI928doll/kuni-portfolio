@@ -106,6 +106,14 @@
 .c-form__select {
   padding-right: rem(40);
   cursor: pointer;
+
+  // 未選択（「選択してください」のまま）はプレースホルダーと同じ薄い文字色にする
+  &:has(option[value='']:checked) {
+    color: $color-line;
+  }
+  option {
+    color: $color-text;
+  }
 }
 
 // 同意チェック
@@ -123,11 +131,16 @@
     @include hover {
       opacity: $opacity;
     }
+    // base の外部リンクアイコン（別窓リンク用）が文中に空白を作るため、同意文では出さない（base と同じ詳細度で上書き）
+    &[target='_blank']::after {
+      content: none;
+    }
   }
 }
 
 // 送信ボタン（c-btn の見た目に合わせつつ input でも成立させる）
 .c-form__actions {
+  position: relative; // ABS_ANCHOR: CF7 のスピナーを absolute で配置
   margin-top: rem(32);
   text-align: center;
 }
@@ -206,7 +219,29 @@
   color: #a5432f;
 }
 
-// 送信中スピナー位置
-.wpcf7-spinner {
-  margin: 0 0 0 rem(12);
+// 送信中スピナー位置（横に並べるとボタンが中央からずれるため、ボタンの下中央に重ねる）
+.c-form__actions .wpcf7-spinner {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin: rem(8) 0 0;
+  translate: -50% 0;
+}
+
+// スパム対策のダミー入力欄（人には見せない。display:none だと入力されないため画面外へ）
+.c-form__trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+// 補足テキスト（入力形式の案内など）
+.c-form__note {
+  margin-top: rem(-4);
+  margin-bottom: rem(8);
+  font-size: rem(12);
+  line-height: 1.6;
+  color: $color-gray;
 }

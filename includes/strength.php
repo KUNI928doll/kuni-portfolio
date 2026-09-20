@@ -5,6 +5,7 @@
     <h2 class="c-sectionTitle js-reveal js-reveal--stamp">
       <span class="c-sectionTitle__ja">強み</span>
       <span class="c-sectionTitle__en">Strength</span>
+      <span class="c-sectionTitle__curl" aria-hidden="true"></span>
     </h2>
     <ul class="p-topStrength__list">
       <li class="p-topStrength__item js-reveal" data-reveal-delay="0">

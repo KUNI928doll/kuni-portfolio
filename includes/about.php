@@ -5,11 +5,13 @@
     <h2 class="c-sectionTitle p-topAbout__title js-reveal js-reveal--stamp">
       <span class="c-sectionTitle__ja">自己紹介</span>
       <span class="c-sectionTitle__en">About</span>
+      <span class="c-sectionTitle__curl" aria-hidden="true"></span>
     </h2>
     <div class="p-topAbout__columns">
       <figure class="p-topAbout__photo js-reveal js-reveal--left">
         <picture>
-          <img src="<?php echo $img; ?>/about-photo.png" alt="" loading="lazy">
+          <source srcset="<?php echo $img; ?>/about-photo.webp" type="image/webp">
+          <img src="<?php echo $img; ?>/about-photo.png" alt="" width="634" height="774" loading="lazy">
         </picture>
         <span class="p-topAbout__flower js-parallax" data-parallax="0.16" aria-hidden="true">
           <img src="<?php echo $img; ?>/about-flower.svg" alt="">

@@ -2,10 +2,10 @@
 
 // 汎用の固定ページ（プライバシーポリシー等）。下層レイアウトで本文を表示
 .p-page {
-  padding-block: rem(48) rem(96);
+  padding-block: rem(48) rem(96); // 下端はフッターの波（l-footer::before）が重なるため広めに確保
 
   @include mq(md) {
-    padding-block: rem(64) rem(140);
+    padding-block: rem(64) rem(314);
   }
 }
 .p-page__breadcrumb {

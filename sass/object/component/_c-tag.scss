@@ -1,0 +1,34 @@
+@use 'global' as *;
+
+// 制作実績のタグ（種別ごとに色分け。制作カテゴリーのスラッグを modifier にする）
+.c-tag {
+  padding: rem(3) rem(14);
+  display: inline-flex;
+  align-items: center;
+  font-size: rem(12);
+  font-weight: $fw-medium;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  color: $color-text;
+  background: $color-white;
+  border: 1px solid transparent;
+  border-radius: 100vh;
+}
+// Web サイト
+.c-tag--website {
+  background: $color-green;
+}
+// LP
+.c-tag--lp {
+  background: $color-red;
+}
+// 名刺デザイン
+.c-tag--business-card {
+  background: $color-cream;
+  border-color: $color-line;
+}
+// WordPress（技術タグは白地 + 枠線で種別タグと区別）
+.c-tag--wordpress {
+  color: $color-gray;
+  border-color: $color-gray;
+}

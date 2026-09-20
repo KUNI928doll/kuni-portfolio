@@ -2,7 +2,8 @@
 
 .p-topWorks {
   padding-block: rem(120);
-  background: url('../img/works-bg.svg') no-repeat top center / 100% auto, $color-cream;
+  // 上端の波（曲線より上は白・下はクリーム・線なし。works-bg.svg は曲線より上が透過でクリームが透けるため使わない）
+  background: url('../img/lower-wave-top.svg') no-repeat top center / 100% auto, $color-cream;
 }
 .p-topWorks__heading {
   display: flex;
@@ -65,13 +66,28 @@
     }
   }
 }
+.p-topWorks__link {
+  display: block;
+  color: $color-text;
+
+  &:focus-visible {
+    outline: 2px solid $color-gray;
+    outline-offset: rem(4);
+  }
+  // キーボード操作でも hover と同じ説明を表示
+  &:focus-visible .p-topWorks__caption {
+    opacity: 1;
+  }
+}
 .p-topWorks__img {
   position: relative; // ABS_ANCHOR: __caption を absolute で重ねる基準
-  aspect-ratio: 248 / 197;
+  aspect-ratio: 16 / 10;
+  background: $color-white;
 
   img {
-    aspect-ratio: 248 / 197;
-    object-fit: cover;
+    height: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: contain; // 切らずに画像全体を見せる（上下左右に余白が入る）
     transition: transform 0.4s ease;
   }
 }
@@ -90,6 +106,28 @@
   opacity: 0;
   transition: opacity 0.4s ease;
 }
+.p-topWorks__body {
+  margin-top: rem(14);
+  text-align: center;
+}
+.p-topWorks__tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: rem(6);
+}
+.p-topWorks__title {
+  margin-top: rem(10);
+  font-family: $ff-serif;
+  font-size: rem(16);
+  line-height: 1.6;
+}
+.p-topWorks__client {
+  margin-top: rem(4);
+  font-size: rem(13);
+  line-height: 1.6;
+  color: $color-gray;
+}
 .p-topWorks__more {
   margin-top: rem(80);
   margin-inline: auto;
@@ -97,4 +135,31 @@
   width: rem(247);
   font-family: $ff-serif;
   letter-spacing: 0;
+}
+
+// デモ動画（hover / スマホは画面内に入ったら再生。JS が再生中に .is-playing を付与）
+.p-topWorks__video {
+  position: absolute; // ABSOLUTE_FILL: サムネイルの上に重ねる
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; // サムネイルと同じく切らずに全体を見せる
+  background: $color-white;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+
+  &.is-playing {
+    opacity: 1;
+  }
+}
+// 動画つきカードは hover で画像を動かさない（動画の縁から、ずれた画像が見えるため）
+.p-topWorks__img--video img {
+  transform: none !important;
+}
+// 動画つきカードはタイトルを全面ではなく下部の帯で出し、動画を隠さない
+.p-topWorks__img--video .p-topWorks__caption {
+  inset: auto 0 0;
+  padding-block: rem(10);
+  font-size: rem(14);
+  background: rgba($color-text, 0.7);
 }

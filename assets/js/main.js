@@ -17,12 +17,20 @@ Tsumugu LP — main
   ローディング → 本体フェードイン → FV 演出開始
   --------------------------------------------------------------------*/
   const MIN_LOADING_MS = 2500;
+  const LOADED_KEY = 'tsumugu-loaded';
+  // 同じタブで 2 ページ目以降はローディングを出さない（head のインラインスクリプトで判定済み）
+  const skipLoading = document.documentElement.classList.contains('is-loadingSkip');
   let booted = false;
 
   const reveal = () => {
     document.body.classList.remove('fadeIn');
     const loading = document.querySelector('.js-loading');
-    if (loading) {
+    try {
+      sessionStorage.setItem(LOADED_KEY, '1');
+    } catch (e) {}
+    if (loading && skipLoading) {
+      loading.remove();
+    } else if (loading) {
       loading.classList.add('is-opening', 'is-opened');
       const page = loading.querySelector('.c-loading__page--right');
       const done = () => loading.remove();
@@ -35,14 +43,14 @@ Tsumugu LP — main
     setTimeout(() => {
       document.body.classList.add('is-loaded');
       startTyping();
-    }, 450);
+    }, skipLoading ? 0 : 450);
   };
 
   // ローディングは最低 MIN_LOADING_MS 表示してから退場（一瞬で消えないように）
   const bootReveal = () => {
     if (booted) return;
     booted = true;
-    const wait = Math.max(0, MIN_LOADING_MS - performance.now());
+    const wait = skipLoading ? 0 : Math.max(0, MIN_LOADING_MS - performance.now());
     setTimeout(reveal, wait);
   };
 
@@ -105,7 +113,8 @@ Tsumugu LP — main
       });
     });
 
-    const items = document.querySelectorAll('.js-reveal');
+    // .js-draw は透明にせず、表示時に線を「書く」演出だけを付けるフック
+    const items = document.querySelectorAll('.js-reveal, .js-draw');
     if (!('IntersectionObserver' in window) || !items.length) {
       items.forEach((el) => el.classList.add('is-shown'));
       return;
@@ -153,6 +162,76 @@ Tsumugu LP — main
   };
 
   /*-------------------------------------------------------------------
+  制作実績カードのデモ動画（PC: hover / フォーカスで再生、タッチ端末: 画面内で再生）
+  --------------------------------------------------------------------*/
+  const initHoverVideo = () => {
+    const cards = [...document.querySelectorAll('.js-hoverVideoCard')];
+    if (!cards.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const play = (video) => {
+      const p = video.play();
+      if (p && p.catch) p.catch(() => {});
+    };
+    const stop = (video) => {
+      video.pause();
+      video.classList.remove('is-playing');
+    };
+    const pairs = cards.map((card) => [card, card.querySelector('.js-hoverVideo')]).filter(([, v]) => v);
+    pairs.forEach(([, video]) => {
+      video.addEventListener('playing', () => video.classList.add('is-playing'));
+    });
+
+    if (window.matchMedia('(any-hover: hover)').matches) {
+      pairs.forEach(([card, video]) => {
+        card.addEventListener('mouseenter', () => play(video));
+        card.addEventListener('focus', () => play(video));
+        card.addEventListener('mouseleave', () => stop(video));
+        card.addEventListener('blur', () => stop(video));
+      });
+      return;
+    }
+    if (!('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target.querySelector('.js-hoverVideo');
+        entry.isIntersecting ? play(video) : stop(video);
+      });
+    }, { threshold: 0.6 });
+    pairs.forEach(([card]) => io.observe(card));
+  };
+
+  /*-------------------------------------------------------------------
+  SP のハンバーガーメニュー（開閉・Esc で閉じる・リンクで閉じる）
+  --------------------------------------------------------------------*/
+  const initNavToggle = () => {
+    const toggle = document.querySelector('.js-navToggle');
+    const list = document.querySelector('.js-navList');
+    const overlay = document.querySelector('.js-navOverlay');
+    if (!toggle || !list) return;
+
+    const setOpen = (open) => {
+      document.body.classList.toggle('is-navOpen', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
+    };
+
+    toggle.addEventListener('click', () => setOpen(!document.body.classList.contains('is-navOpen')));
+    if (overlay) overlay.addEventListener('click', () => setOpen(false));
+    list.addEventListener('click', (e) => {
+      if (e.target.closest('a')) setOpen(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.body.classList.contains('is-navOpen')) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+    // PC 幅に戻したときに開いたままにしない
+    window.matchMedia('(min-width: 768px)').addEventListener('change', (e) => {
+      if (e.matches) setOpen(false);
+    });
+  };
+
+  /*-------------------------------------------------------------------
   アンカーへのスムーススクロール
   --------------------------------------------------------------------*/
   const initSmoothScroll = () => {
@@ -191,10 +270,17 @@ Tsumugu LP — main
   document.addEventListener('DOMContentLoaded', () => {
     initReveal();
     initParallax();
+    initHoverVideo();
+    initNavToggle();
     initSmoothScroll();
     initTotop();
   });
-  window.addEventListener('load', bootReveal);
+  if (skipLoading) {
+    // ローディングを出さないときは画像の読み込み完了（load）を待たずに本編を開始
+    document.addEventListener('DOMContentLoaded', bootReveal);
+  } else {
+    window.addEventListener('load', bootReveal);
+  }
   // load が発火しない/遅い場合の安全弁（最大 4s で必ず本編へ）
   setTimeout(bootReveal, 4000);
 })();

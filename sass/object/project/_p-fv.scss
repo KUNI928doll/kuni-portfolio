@@ -6,6 +6,18 @@
   overflow-x: clip;
   background: url('../img/fv-wave-top.svg') center top / 100% auto no-repeat, $color-white;
 
+  // SP は波の高さが画面幅に比例して低くなりロゴがはみ出すため、波は形を保ったまま下げ、
+  // 上側は緑のベタ塗りで埋める（波を縦に引き伸ばさない）
+  @include mq(under-md) {
+    padding-top: rem(196);
+    background-image:
+      url('../img/fv-wave-top.svg'),
+      linear-gradient(to bottom, $color-green rem(100), $color-white rem(100));
+    background-position: center rem(100), left top;
+    background-size: 100% auto, 100% 100%;
+    background-repeat: no-repeat, no-repeat;
+  }
+
   @include mq(md) {
     padding-top: rem(252);
     padding-bottom: rem(40);
@@ -34,9 +46,7 @@
 }
 
 .p-fv__catchWrap {
-  @include mq(md) {
-    position: relative;
-  }
+  position: relative; // ABS_ANCHOR: __underline / __pencil の基準（SP でも使う）
 }
 
 .p-fv__catch {
@@ -49,10 +59,46 @@
   }
 }
 
+.p-fv__catchLine2 {
+  @include mq(md) {
+    // カンプ通り 2 行目は右へ下げ、下線（__underline: left 104）の始まりに揃える
+    display: inline-block;
+    margin-left: rem(98);
+  }
+}
+
+// 傍点（カンプの 6px の丸。「だけ」「伴走型」の各文字の上）
+// JS が 1 文字ずつ span（.js-typing__char）に分けるので、その文字ごとに丸を載せる（文字と一緒にフェードイン）
+.p-fv__dots .js-typing__char {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: em(-8, 48); // 文字の上端から少し離す（カンプ: 約 10px 上）
+    left: 50%;
+    width: em(6, 48);
+    height: em(6, 48);
+    background: $color-text;
+    border-radius: 50%;
+    translate: -50% 0;
+  }
+}
+
 .p-fv__underline {
-  display: none;
+  // SP はキャッチが中央寄せのため、2 行目の幅に合わせて中央に敷く
+  position: absolute;
+  top: rem(80);
+  left: 50%;
+  display: block;
+  width: rem(210);
+  translate: -50% 0;
 
   @include mq(md) {
+    top: rem(177);
+    left: rem(104);
+    width: rem(465);
+    translate: none;
     position: absolute;
     top: rem(177);
     left: rem(104);
@@ -62,9 +108,17 @@
 }
 
 .p-fv__pencil {
-  display: none;
+  // SP は下線の右端に置く
+  position: absolute;
+  top: rem(46);
+  left: calc(50% + #{rem(93)});
+  display: block;
+  width: rem(38);
 
   @include mq(md) {
+    top: rem(114);
+    left: rem(555);
+    width: rem(82);
     position: absolute;
     top: rem(114);
     left: rem(555);
@@ -97,8 +151,9 @@
     content: '';
     position: absolute;
     top: 50%;
-    right: em(-10, 30);
-    left: em(-10, 30);
+    // 右側を文字の外へ広げると次の「し」に被るため、右端は「心」の文字幅で止める（左はカンプ通り -6px）
+    right: 0;
+    left: em(-6, 30);
     z-index: -1;
     height: em(36, 30);
     background: $color-red;
@@ -130,6 +185,10 @@
   width: 105%;
 }
 
+.p-fv__photoPicture {
+  display: contents; // WebP 用の <picture> でレイアウトを変えない
+}
+
 .p-fv__photoImg {
   position: relative;
   z-index: 1;
@@ -141,4 +200,30 @@
   left: 12%;
   z-index: 2;
   width: 20.5%;
+}
+
+// キャッチの 1 文字ずつ表示が終わるころに、下線を左→右へ書き、鉛筆が線の先を追う
+$fv-draw-ease: cubic-bezier(0.45, 0, 0.2, 1);
+
+.p-fv__underline {
+  clip-path: inset(-50% 100% -50% 0);
+  transition: clip-path 1.1s $fv-draw-ease 1.6s;
+
+  body.is-loaded & {
+    clip-path: inset(-50% 0 -50% 0);
+  }
+}
+.p-fv__pencil {
+  opacity: 0;
+  transform: translateX(rem(-200)); // SP の移動量（下線の長さに合わせる）
+  transition: transform 1.1s $fv-draw-ease 1.6s, opacity 0.3s ease 1.6s;
+
+  @include mq(md) {
+    transform: translateX(rem(-440));
+  }
+
+  body.is-loaded & {
+    opacity: 1;
+    transform: none;
+  }
 }

@@ -1,25 +1,40 @@
 @use 'global' as *;
 
-// フッター（ロゴ中央・白背景）
+// フッター（ロゴ中央・ほぼ白背景）
+// カンプ通り、ノート型の波の中にロゴが入る（波の山から約 90px 下にロゴの線画）
 .l-footer {
   position: relative;
   display: flex;
   justify-content: center;
-  padding-block: rem(24) rem(40);
-  background: $color-white;
-  // 上端の波（お問い合わせの緑背景へ食い込む near-white の波型遷移）
+  padding-bottom: rem(24);
+  background: $color-nearwhite;
+
+  @include mq(md) {
+    padding-bottom: 0; // ロゴ画像の下側の透明余白がそのまま下余白になる
+  }
+  // 上端のノート型の波（直前のセクションへ食い込む near-white の波型遷移・全幅）
+  // SVG の縦横比（1366 / 214）と揃えないと、縮小されて中央に小さく表示されるため注意
   &::before {
     content: '';
     position: absolute;
     left: 0;
-    bottom: 100%;
+    bottom: calc(100% - 1px); // 1px 重ねて境界の隙間を防ぐ
     width: 100%;
-    aspect-ratio: 1366 / 120;
+    aspect-ratio: 1366 / 214;
     background: url('../img/footer-wave.svg') no-repeat bottom center / 100% 100%;
     pointer-events: none;
   }
 }
 
 .l-footer__logo {
-  width: rem(200);
+  position: relative; // 直前のセクション（position: relative）より前面に出す
+  margin-top: rem(-40);
+  width: rem(150);
+
+  @include mq(md) {
+    margin-top: rem(-170); // ロゴ画像の上の透明余白を相殺してカンプの位置に合わせる
+    width: rem(270); // カンプの線画の見た目幅（約 230px）に合わせる
+    height: rem(198); // 画像下側の透明余白を切り詰め、ページ下端までの余白をカンプに合わせる
+    overflow: clip;
+  }
 }

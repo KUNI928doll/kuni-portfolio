@@ -2,11 +2,12 @@
 
 // 制作実績アーカイブ（一覧）
 .p-worksArchive {
-  padding-block: rem(48) rem(140); // 下端はフッターの波（l-footer::before）が重なるため広めに確保
-  background: $color-cream;
+  padding-block: rem(64) rem(140); // 下端はフッターの波（l-footer::before）が重なるため広めに確保
+  // 上端は波で白いヒーローからクリームへつなぐ（下層ページは線なし）
+  background: url('../img/lower-wave-top.svg') no-repeat top center / 100% auto, $color-cream;
 
   @include mq(md) {
-    padding-block: rem(64) rem(240);
+    padding-block: rem(120) rem(314);
   }
 }
 .p-worksArchive__list {
