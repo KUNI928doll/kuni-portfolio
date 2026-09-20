@@ -89,6 +89,47 @@ add_action('wp_head', function () {
 }, 1);
 
 /**
+ * セキュリティ（ログイン ID を外から分からなくする・バージョンを隠す）
+ * SiteGuard でログインページは隠しているので、ここでは情報の露出だけを塞ぐ
+ */
+
+// 1. REST API のユーザー情報は、ログインしていない人には返さない
+add_filter('rest_endpoints', function ($endpoints) {
+  if (is_user_logged_in()) {
+    return $endpoints;
+  }
+  unset($endpoints['/wp/v2/users'], $endpoints['/wp/v2/users/(?P<id>[\d]+)']);
+  return $endpoints;
+});
+
+// 2. 作者ページ（/author/○○/）は使わないので 404 にする
+add_action('template_redirect', function () {
+  if (is_author()) {
+    global $wp_query;
+    $wp_query->set_404();
+    status_header(404);
+    nocache_headers();
+  }
+});
+
+// 3. /?author=1 のような番号からユーザー名を探る動きを止める
+add_action('init', function () {
+  if (!is_admin() && isset($_GET['author']) && !is_user_logged_in()) {
+    wp_safe_redirect(home_url('/'), 301);
+    exit;
+  }
+});
+
+// 4. WordPress のバージョンを隠す（脆弱性を狙われにくくする）
+remove_action('wp_head', 'wp_generator');
+add_filter('the_generator', '__return_empty_string');
+
+// 5. ログイン失敗時に「ユーザー名が違う／パスワードが違う」を区別しない
+add_filter('login_errors', function () {
+  return 'ログイン情報が正しくありません。';
+});
+
+/**
  * Google タグマネージャー（GTM）
  * GA4・Clarity などの計測タグは GTM の管理画面から配信する（テーマには GTM だけ置く）
  * ログイン中のユーザー・管理画面・プレビューでは読み込まない
