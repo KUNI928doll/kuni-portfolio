@@ -244,8 +244,8 @@ html {
 }
 @media (min-width: 768px) {
   html {
-    font-size: 1.1713030747vw;
-    font-size: calc(var(--vw-unitless) / 1366 * 16px);
+    font-size: max(12px, 1.1713030747vw);
+    font-size: max(12px, var(--vw-unitless) / 1366 * 16px);
   }
 }
 @media (min-width: 1366px) {
@@ -1344,7 +1344,7 @@ body {
   flex-direction: column;
   gap: 1.25rem;
 }
-@media (max-width: 767.98px) {
+@media (max-width: 1023.98px) {
   .p-nav {
     top: 0;
     right: 0;
@@ -1369,7 +1369,7 @@ body {
 .p-navToggle {
   display: none;
 }
-@media (max-width: 767.98px) {
+@media (max-width: 1023.98px) {
   .p-navToggle {
     position: fixed;
     top: 0.75rem;
@@ -1417,7 +1417,7 @@ body.is-navOpen .p-navToggle__bar:nth-child(3) {
 .p-navOverlay {
   display: none;
 }
-@media (max-width: 767.98px) {
+@media (max-width: 1023.98px) {
   .p-navOverlay {
     position: fixed;
     inset: 0;
@@ -1438,7 +1438,7 @@ body.is-navOpen .p-navToggle__bar:nth-child(3) {
   opacity: 0;
   transform: translateX(1.5rem);
 }
-@media (max-width: 767.98px) {
+@media (max-width: 1023.98px) {
   .p-nav__item {
     opacity: 1;
     transform: none;
@@ -1474,7 +1474,7 @@ body.is-loaded .p-nav__item:nth-child(6) {
 .p-nav__link {
   display: flex;
 }
-@media (max-width: 767.98px) {
+@media (max-width: 1023.98px) {
   .p-nav__link {
     width: 100%;
     padding-block: 0.625rem;
@@ -2233,7 +2233,7 @@ body.is-loaded .p-fv__pencil {
 }
 @media (min-width: 768px) {
   .p-topService__subheading {
-    font-size: 2.196193265vw;
+    font-size: max(18px, 2.196193265vw);
   }
   .p-topService__subheading::after {
     margin-top: 1.317715959vw;
@@ -2245,7 +2245,7 @@ body.is-loaded .p-fv__pencil {
 
 @media (min-width: 768px) {
   .p-topService__subheading--right {
-    font-size: 2.0497803807vw;
+    font-size: max(17px, 2.0497803807vw);
   }
 }
 
@@ -2255,7 +2255,7 @@ body.is-loaded .p-fv__pencil {
 }
 @media (min-width: 768px) {
   .p-topService__subNote {
-    font-size: 1.4641288433vw;
+    font-size: max(12px, 1.4641288433vw);
   }
 }
 
@@ -2287,7 +2287,7 @@ body.is-loaded .p-fv__pencil {
 @media (min-width: 768px) {
   .p-topService__item {
     padding-left: 2.196193265vw;
-    font-size: 1.1713030747vw;
+    font-size: max(12px, 1.1713030747vw);
   }
   .p-topService__item:not(:first-child) {
     margin-top: 2.0497803807vw;

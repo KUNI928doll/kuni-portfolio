@@ -12,7 +12,7 @@
   gap: rem(20);
 
   // SP は右から出るドロワー（ハンバーガーで開閉）
-  @include mq(under-md) {
+  @include mq(under-lg) {
     top: 0;
     right: 0;
     bottom: 0;
@@ -38,7 +38,7 @@
 .p-navToggle {
   display: none;
 
-  @include mq(under-md) {
+  @include mq(under-lg) {
     position: fixed;
     top: rem(12);
     right: rem(12);
@@ -85,7 +85,7 @@ body.is-navOpen .p-navToggle__bar:nth-child(3) {
 .p-navOverlay {
   display: none;
 
-  @include mq(under-md) {
+  @include mq(under-lg) {
     position: fixed;
     inset: 0;
     z-index: 55;
@@ -107,7 +107,7 @@ body.is-navOpen .p-navToggle__bar:nth-child(3) {
   transform: translateX(rem(24));
 
   // SP はドロワーを開いた時点で見えている状態にする（ローディング演出は PC のみ）
-  @include mq(under-md) {
+  @include mq(under-lg) {
     opacity: 1;
     transform: none;
     transition: none;
@@ -130,7 +130,7 @@ body.is-navOpen .p-navToggle__bar:nth-child(3) {
 .p-nav__link {
   display: flex;
 
-  @include mq(under-md) {
+  @include mq(under-lg) {
     width: 100%;
     padding-block: rem(10);
     font-size: rem(18);

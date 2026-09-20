@@ -231,7 +231,7 @@
   }
 
   @include mq(md) {
-    font-size: vw(30, 1366);
+    font-size: max(18px, #{vw(30, 1366)});
 
     &::after {
       margin-top: vw(18, 1366);
@@ -244,7 +244,7 @@
 
 .p-topService__subheading--right {
   @include mq(md) {
-    font-size: vw(28, 1366);
+    font-size: max(17px, #{vw(28, 1366)});
   }
 }
 
@@ -253,7 +253,7 @@
   font-size: rem(14);
 
   @include mq(md) {
-    font-size: vw(20, 1366);
+    font-size: max(12px, #{vw(20, 1366)});
   }
 }
 
@@ -285,7 +285,7 @@
 
   @include mq(md) {
     padding-left: vw(30, 1366);
-    font-size: vw(16, 1366);
+    font-size: max(12px, #{vw(16, 1366)});
 
     &:not(:first-child) {
       margin-top: vw(28, 1366);

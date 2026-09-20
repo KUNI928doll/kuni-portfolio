@@ -13,6 +13,10 @@ $breakpoints: (
     @media (max-width: #{$bp-md - 0.02px}) {
       @content;
     }
+  } @else if $key == 'under-lg' {
+    @media (max-width: #{$bp-lg - 0.02px}) {
+      @content;
+    }
   } @else if $key == 'only-md' {
     @media (min-width: $bp-md) and (max-width: #{$bp-lg - 0.02px}) {
       @content;

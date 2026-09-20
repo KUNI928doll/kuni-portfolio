@@ -2,6 +2,7 @@
 
 // ルート・基準フォントサイズ
 $fz-root: 16px;
+$fz-root-min: 12px; // タブレットで縮小しすぎないための下限
 $fz-default: 16;
 $fz-base: rem(16);
 

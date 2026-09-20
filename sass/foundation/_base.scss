@@ -13,9 +13,11 @@ html {
     font-size: calc(var(--vw-unitless) / strip-unit($layout-sp-vw) * $fz-root);
   }
 
+  // md〜xl はデザイン幅 1366 を基準に縮小する。ただし 1366 比のままだと
+  // タブレット（768〜1023px）で 9〜12px になり読めないため、下限 12px を設ける
   @include mq(md) {
-    font-size: vw($fz-default, $layout-width-container);
-    font-size: calc(var(--vw-unitless) / strip-unit($layout-width-container) * $fz-root);
+    font-size: max(#{$fz-root-min}, #{vw($fz-default, $layout-width-container)});
+    font-size: max(#{$fz-root-min}, calc(var(--vw-unitless) / strip-unit($layout-width-container) * #{$fz-root}));
   }
 
   @media (min-width: $layout-width-container) {

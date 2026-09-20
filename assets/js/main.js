@@ -226,7 +226,7 @@ Tsumugu LP — main
       }
     });
     // PC 幅に戻したときに開いたままにしない
-    window.matchMedia('(min-width: 768px)').addEventListener('change', (e) => {
+    window.matchMedia('(min-width: 1024px)').addEventListener('change', (e) => {
       if (e.matches) setOpen(false);
     });
   };
