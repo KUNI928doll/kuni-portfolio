@@ -124,6 +124,49 @@ add_action('wp_body_open', function () {
 });
 
 /**
+ * サイトマップの調整
+ * このサイトはブログを使わないため、投稿・カテゴリ・タグ・投稿者のサイトマップを外す。
+ * 代わりに、制作実績の一覧（/works/）を載せる（WordPress 標準では一覧が入らない）
+ */
+add_filter('wp_sitemaps_post_types', function ($post_types) {
+  unset($post_types['post']);
+  return $post_types;
+});
+
+add_filter('wp_sitemaps_taxonomies', function ($taxonomies) {
+  unset($taxonomies['category'], $taxonomies['post_tag']);
+  return $taxonomies;
+});
+
+add_filter('wp_sitemaps_add_provider', function ($provider, $name) {
+  if ($name === 'users') {
+    return false;
+  }
+  return $provider;
+}, 10, 2);
+
+// 制作実績の一覧ページをサイトマップに追加
+add_filter('wp_sitemaps_posts_pre_url_list', function ($url_list, $post_type, $page_num) {
+  if ($post_type !== 'works' || (int) $page_num !== 1) {
+    return $url_list;
+  }
+  $archive = get_post_type_archive_link('works');
+  if (!$archive) {
+    return $url_list;
+  }
+  $list = $url_list;
+  if (!is_array($list)) {
+    $list = [];
+    $query = new WP_Query(['post_type' => 'works', 'posts_per_page' => -1, 'fields' => 'ids', 'no_found_rows' => true]);
+    foreach ($query->posts as $id) {
+      $list[] = ['loc' => get_permalink($id)];
+    }
+  }
+  array_unshift($list, ['loc' => $archive]);
+  return $list;
+}, 10, 3);
+
+/**
  * canonical（正規 URL）
  * WordPress は個別ページにしか出力しないため、トップ・一覧にも自前で出す
  */
