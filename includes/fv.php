@@ -8,7 +8,7 @@
           <span class="p-fv__underline" aria-hidden="true"><img src="<?php echo $img; ?>/fv-underline.svg" alt="" loading="eager"></span>
           <span class="p-fv__pencil" aria-hidden="true"><img src="<?php echo $img; ?>/fv-pencil.svg" alt="" loading="eager"></span>
         </div>
-        <p class="p-fv__lead js-afterTyping">ディレクター様の進行を止めない、<br><span class="p-fv__mark">安心</span>して任せられるWebコーディング</p>
+        <p class="p-fv__lead js-afterTyping">進行を止めない、<br><span class="p-fv__mark">安心</span>して任せられるWebコーディング</p>
       </div>
       <figure class="p-fv__photo js-reveal js-reveal--soft">
         <span class="p-fv__frame" aria-hidden="true"><img src="<?php echo $img; ?>/fv-photo-frame.svg" alt="" loading="eager"></span>
