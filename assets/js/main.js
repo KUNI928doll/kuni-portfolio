@@ -31,6 +31,9 @@ Tsumugu LP — main
     if (loading && skipLoading) {
       loading.remove();
     } else if (loading) {
+      // カバーは 1 秒かけて開く。透けてから is-loaded が付くまでの間、
+      // キャッチやナビの完成形が見えてしまうので、その間だけ伏せておく
+      document.body.classList.add('is-fvHold');
       loading.classList.add('is-opening', 'is-opened');
       const page = loading.querySelector('.c-loading__page--right');
       const done = () => loading.remove();
@@ -39,11 +42,21 @@ Tsumugu LP — main
       }
       setTimeout(done, 1300); // フォールバック
     }
-    // ノートが開き始めてから少し遅れて、ナビ順次出現＋FV の 1 字ずつを開始
-    setTimeout(() => {
+    // ノートが開き始めてから少し遅れて、ナビ順次出現＋FV キャッチの演出を開始
+    // ローディングを出さないときも、初期状態が 1 度描画されてから合図を出す
+    // （同じフレームで付けると transition が走らず、アニメーションが飛んでしまう）
+    // requestAnimationFrame は非アクティブなタブでは止まるため使わない。
+    // 代わりに一度レイアウトを読み出して初期状態を確定させてから合図を出す
+    const markLoaded = () => {
+      void document.body.offsetHeight;
+      document.body.classList.remove('is-fvHold');
       document.body.classList.add('is-loaded');
-      startTyping();
-    }, skipLoading ? 0 : 450);
+    };
+    // ノートが開く演出（1 秒）が終わってから始める。開いている最中だとカバーに隠れて
+    // キャッチのせり上がりが見えない
+    setTimeout(markLoaded, skipLoading ? 60 : 1150);
+    // 保険: 何かで演出が始まらなくても、キャッチが見えないまま残らないようにする
+    setTimeout(markLoaded, 6000);
   };
 
   // ローディングは最低 MIN_LOADING_MS 表示してから退場（一瞬で消えないように）
@@ -55,48 +68,21 @@ Tsumugu LP — main
   };
 
   /*-------------------------------------------------------------------
-  FV キャッチ: 1 文字ずつ表示（.js-typing 内の文字を span 化）
+  FV キャッチの傍点: 「だけ」「伴走型」の各文字を span に分けて丸を載せる
+  （CSS だけでは 1 文字ごとに丸を置けないため）
   --------------------------------------------------------------------*/
-  const splitToChars = (el) => {
-    const walk = (node) => {
-      const frag = document.createDocumentFragment();
-      node.childNodes.forEach((child) => {
-        if (child.nodeType === Node.TEXT_NODE) {
-          [...child.textContent].forEach((ch) => {
-            const span = document.createElement('span');
-            span.className = 'js-typing__char';
-            span.textContent = ch;
-            if (ch === ' ' || ch === '　') span.style.whiteSpace = 'pre';
-            frag.appendChild(span);
-          });
-        } else if (child.nodeName === 'BR') {
-          frag.appendChild(child.cloneNode());
-        } else {
-          const clone = child.cloneNode(false);
-          clone.appendChild(walk(child));
-          frag.appendChild(clone);
-        }
+  const splitDots = () => {
+    document.querySelectorAll('.js-fvDots').forEach((el) => {
+      if (el.dataset.split === 'done') return;
+      const chars = [...el.textContent];
+      el.textContent = '';
+      chars.forEach((ch) => {
+        const span = document.createElement('span');
+        span.className = 'p-fv__dot';
+        span.textContent = ch;
+        el.appendChild(span);
       });
-      return frag;
-    };
-    const built = walk(el);
-    el.textContent = '';
-    el.appendChild(built);
-    return el.querySelectorAll('.js-typing__char');
-  };
-
-  const startTyping = () => {
-    const targets = document.querySelectorAll('.js-typing');
-    targets.forEach((el) => {
-      const chars = splitToChars(el);
-      const step = Number(el.dataset.typingStep || 70);
-      chars.forEach((ch, i) => {
-        setTimeout(() => ch.classList.add('is-shown'), i * step);
-      });
-      const total = chars.length * step;
-      // 副文などキャッチ完了後に一括表示する要素
-      const after = document.querySelectorAll('.js-afterTyping');
-      after.forEach((a) => setTimeout(() => a.classList.add('is-shown'), total + 200));
+      el.dataset.split = 'done';
     });
   };
 
@@ -268,6 +254,7 @@ Tsumugu LP — main
   init
   --------------------------------------------------------------------*/
   document.addEventListener('DOMContentLoaded', () => {
+    splitDots();
     initReveal();
     initParallax();
     initHoverVideo();

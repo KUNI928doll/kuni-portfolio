@@ -4,7 +4,10 @@
     <div class="p-fv__inner">
       <div class="p-fv__body">
         <div class="p-fv__catchWrap">
-          <h1 class="p-fv__catch js-typing">つくる<span class="p-fv__dots">だけ</span>で終わらせない、<br><span class="p-fv__catchLine2"><span class="p-fv__dots">伴走型</span>Webコーダー</span></h1>
+          <h1 class="p-fv__catch">
+            <span class="p-fv__catchLine"><span class="p-fv__catchInner">つくる<span class="p-fv__dots js-fvDots">だけ</span>で終わらせない、</span></span>
+            <span class="p-fv__catchLine p-fv__catchLine--indent"><span class="p-fv__catchInner"><span class="p-fv__dots js-fvDots">伴走型</span>Webコーダー</span></span>
+          </h1>
           <span class="p-fv__underline" aria-hidden="true"><img src="<?php echo $img; ?>/fv-underline.svg" alt="" loading="eager"></span>
           <span class="p-fv__pencil" aria-hidden="true"><img src="<?php echo $img; ?>/fv-pencil.svg" alt="" loading="eager"></span>
         </div>

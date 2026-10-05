@@ -1,5 +1,8 @@
 @use 'global' as *;
 
+// キャッチの演出で共通して使うイージング（最初に速く動いて最後にピタッと止まる）
+$fv-ease: cubic-bezier(0.55, 0.01, 0, 1);
+
 .p-fv {
   padding-top: rem(140);
   padding-bottom: rem(48);
@@ -49,27 +52,99 @@
   position: relative; // ABS_ANCHOR: __underline / __pencil の基準（SP でも使う）
 }
 
+// 演出は「初期状態を CSS で隠す」のではなく @keyframes で再生する。
+// こうすると JS が何らかの理由で is-loaded を付けられなくても、
+// 「演出が出ない」だけで済み、文字が消えたままにならない
+@keyframes fvZoomOut {
+  from {
+    transform: scale(1.25);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes fvRise {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fvBand {
+  from {
+    clip-path: inset(0 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 100%);
+  }
+}
+
 .p-fv__catch {
   font-family: $ff-serif;
   font-size: rem(22);
   line-height: 1.958;
+  // ③ 全体は 1.25 倍から等倍へ引いて収まる（ローディング後に開始）
+  transform-origin: center top;
 
   @include mq(md) {
     font-size: rem(48);
+    transform-origin: left top;
+  }
+  body.is-loaded & {
+    animation: fvZoomOut 1s $fv-ease 1.3s backwards;
   }
 }
 
-.p-fv__catchLine2 {
+// ① 行ごとに下からせり上がる（親を「窓」にして見切る）
+.p-fv__catchLine {
+  display: block;
+  overflow: hidden;
+}
+.p-fv__catchInner {
+  position: relative; // ABS_ANCHOR: ② の帯（::after）の基準
+  display: inline-block;
+
+  // ② くすみグリーンの帯が左→右へワイプして文字が現れる
+  // 既定は「ワイプ後」（帯なし）。演出中だけ @keyframes で左から引く
+  &::after {
+    content: '';
+    position: absolute;
+    inset: rem(-2) rem(-6);
+    background: $color-green;
+    clip-path: inset(0 0 0 100%);
+  }
+}
+// ① 行ごとに下からせり上がる
+body.is-loaded {
+  .p-fv__catchLine:nth-of-type(1) .p-fv__catchInner {
+    animation: fvRise 1.2s $fv-ease 0.4s backwards;
+
+    &::after {
+      animation: fvBand 1.1s $fv-ease 1.2s backwards;
+    }
+  }
+  .p-fv__catchLine:nth-of-type(2) .p-fv__catchInner {
+    animation: fvRise 1.2s $fv-ease 0.5s backwards;
+
+    &::after {
+      animation: fvBand 1.1s $fv-ease 1.3s backwards;
+    }
+  }
+}
+
+.p-fv__catchLine--indent .p-fv__catchInner {
   @include mq(md) {
     // カンプ通り 2 行目は右へ下げ、下線（__underline: left 104）の始まりに揃える
-    display: inline-block;
     margin-left: rem(98);
   }
 }
 
 // 傍点（カンプの 6px の丸。「だけ」「伴走型」の各文字の上）
 // JS が 1 文字ずつ span（.js-typing__char）に分けるので、その文字ごとに丸を載せる（文字と一緒にフェードイン）
-.p-fv__dots .js-typing__char {
+.p-fv__dots .p-fv__dot {
   position: relative;
 
   &::before {
@@ -207,7 +282,7 @@ $fv-draw-ease: cubic-bezier(0.45, 0, 0.2, 1);
 
 .p-fv__underline {
   clip-path: inset(-50% 100% -50% 0);
-  transition: clip-path 1.1s $fv-draw-ease 1.6s;
+  transition: clip-path 1.1s $fv-draw-ease 2.4s;
 
   body.is-loaded & {
     clip-path: inset(-50% 0 -50% 0);
@@ -216,7 +291,7 @@ $fv-draw-ease: cubic-bezier(0.45, 0, 0.2, 1);
 .p-fv__pencil {
   opacity: 0;
   transform: translateX(rem(-200)); // SP の移動量（下線の長さに合わせる）
-  transition: transform 1.1s $fv-draw-ease 1.6s, opacity 0.3s ease 1.6s;
+  transition: transform 1.1s $fv-draw-ease 2.4s, opacity 0.3s ease 2.4s;
 
   @include mq(md) {
     transform: translateX(rem(-440));

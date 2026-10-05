@@ -76,23 +76,33 @@ $reveal-ease: cubic-bezier(0.16, 1, 0.3, 1);
   }
 }
 
-// FV キャッチ: 1 文字ずつ
-.js-typing__char {
-  opacity: 0;
-  transition: opacity 0.4s ease;
-
-  &.is-shown {
-    opacity: 1;
+// ローディングのカバーが開いている間だけ、演出前の状態で伏せておく。
+// カバーは 1 秒かけて開くので、透けてから is-loaded が付くまでの間だけ
+// 完成形が見えてしまい「出た → 消えた → せり上がる」とチラついていた。
+// JS がカバーを開くときにだけ付けるクラスなので、JS が動かなければ伏せられない
+@media (prefers-reduced-motion: no-preference) {
+  body.is-fvHold {
+    .p-fv__catchInner,
+    .js-afterTyping,
+    .p-nav__item {
+      opacity: 0;
+    }
   }
 }
 
-// キャッチ完了後に一括表示
-.js-afterTyping {
-  opacity: 0;
-  transition: opacity 0.9s ease;
-
-  &.is-shown {
+// キャッチの演出が終わったあとに表示（リード文など）
+// 既定は表示しておき、演出が走るときだけ遅れてフェードインさせる
+@keyframes fadeInLate {
+  from {
+    opacity: 0;
+  }
+  to {
     opacity: 1;
+  }
+}
+.js-afterTyping {
+  body.is-loaded & {
+    animation: fadeInLate 0.9s ease 2.2s backwards;
   }
 }
 
@@ -118,12 +128,16 @@ $reveal-ease: cubic-bezier(0.16, 1, 0.3, 1);
   .js-reveal--stamp,
   .js-reveal--up,
   .js-reveal--soft,
-  .js-typing__char,
-  .js-afterTyping {
+  .js-afterTyping,
+  .p-fv__catch,
+  .p-fv__catchInner,
+  .p-fv__catchInner::after,
+  .p-nav__item {
     opacity: 1;
     transform: none;
     filter: none;
     transition: none;
+    animation: none;
   }
   .js-parallax {
     transform: none;
