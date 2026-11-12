@@ -12,6 +12,7 @@
       $terms = tsumugu_works_tags(get_the_ID());
       $work_summary = get_post_meta(get_the_ID(), 'works_summary', true);
       $work_client = get_post_meta(get_the_ID(), 'works_client', true);
+      $work_date = get_post_meta(get_the_ID(), 'works_date', true);
       $work_url = get_post_meta(get_the_ID(), 'works_url', true);
       $work_url_note = get_post_meta(get_the_ID(), 'works_url_note', true);
       $work_role = array_filter(array_map('trim', explode('／', (string) get_post_meta(get_the_ID(), 'works_role', true))));
@@ -59,12 +60,18 @@
           <?php elseif (has_post_thumbnail()) : ?>
             <figure class="p-worksSingle__img" style="view-transition-name: work-<?php the_ID(); ?>;"><?php the_post_thumbnail('large'); ?></figure>
           <?php endif; ?>
-          <?php if ($work_client || $work_role || $work_design || $work_period || $work_tools || $work_tech || $work_url || $work_url_note || $has_content) : ?>
+          <?php if ($work_client || $work_date || $work_role || $work_design || $work_period || $work_tools || $work_tech || $work_url || $work_url_note || $has_content) : ?>
             <dl class="p-worksSingle__info">
               <?php if ($work_client) : ?>
                 <div class="p-worksSingle__row">
                   <dt class="p-worksSingle__term">クライアント</dt>
                   <dd class="p-worksSingle__desc"><?php echo esc_html($work_client); ?></dd>
+                </div>
+              <?php endif; ?>
+              <?php if ($work_date) : ?>
+                <div class="p-worksSingle__row">
+                  <dt class="p-worksSingle__term">制作時期</dt>
+                  <dd class="p-worksSingle__desc"><?php echo esc_html($work_date); ?></dd>
                 </div>
               <?php endif; ?>
               <?php if ($work_role) : ?>

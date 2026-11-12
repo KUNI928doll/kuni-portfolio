@@ -335,6 +335,7 @@ function tsumugu_works_fields() {
   return [
     'works_summary' => ['label' => 'サイト概要（タイトル下に表示）', 'type' => 'text', 'placeholder' => '横浜を拠点とした観光・予約代行サービス'],
     'works_client' => ['label' => 'クライアント', 'type' => 'text', 'placeholder' => '〇〇株式会社様'],
+    'works_date' => ['label' => '制作時期', 'type' => 'text', 'placeholder' => '2026年9月'],
     'works_role' => ['label' => '作業内容（「／」区切りで改行）', 'type' => 'text', 'placeholder' => 'コーディング／WordPress オリジナルテーマ開発'],
     'works_design' => ['label' => 'デザインカンプ', 'type' => 'text', 'placeholder' => 'Figma（PC / SP）'],
     'works_period' => ['label' => '制作期間', 'type' => 'text', 'placeholder' => 'コーディング：3週間（トップ1P＋下層5P）'],
