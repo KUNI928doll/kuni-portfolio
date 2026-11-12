@@ -4,6 +4,7 @@
  */
 $terms = tsumugu_works_tags(get_the_ID());
 $work_video = get_post_meta(get_the_ID(), 'works_video', true);
+$is_new = tsumugu_works_is_new(get_the_ID());
 ?>
 <li class="p-workCard js-reveal">
   <a class="p-workCard__link<?php echo $work_video ? ' js-hoverVideoCard' : ''; ?>" href="<?php the_permalink(); ?>">
@@ -13,6 +14,9 @@ $work_video = get_post_meta(get_the_ID(), 'works_video', true);
       <?php endif; ?>
       <?php if ($work_video) : ?>
         <video class="p-workCard__video js-hoverVideo" src="<?php echo esc_url($work_video); ?>" muted loop playsinline preload="none" aria-hidden="true"></video>
+      <?php endif; ?>
+      <?php if ($is_new) : ?>
+        <span class="c-tag c-tag--new p-workCard__new">NEW</span>
       <?php endif; ?>
     </figure>
     <div class="p-workCard__body">
@@ -24,6 +28,7 @@ $work_video = get_post_meta(get_the_ID(), 'works_video', true);
         </ul>
       <?php endif; ?>
       <h3 class="p-workCard__title"><?php the_title(); ?></h3>
+      <p class="p-workCard__date"><?php echo esc_html(get_the_date('Y年n月')); ?></p>
     </div>
   </a>
 </li>

@@ -1337,6 +1337,12 @@ body.is-loaded .js-afterTyping {
   border-color: #7d7a7a;
 }
 
+.c-tag--new {
+  color: #ffffff;
+  background: #4f7d6b;
+  letter-spacing: 0.06em;
+}
+
 .p-top {
   overflow-x: clip;
 }
@@ -1926,6 +1932,20 @@ body.is-loaded .p-fv__pencil {
   font-size: 0.8125rem;
   line-height: 1.6;
   color: #7d7a7a;
+}
+
+.p-topWorks__date {
+  margin-top: 0.25rem;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: #7d7a7a;
+}
+
+.p-topWorks__new {
+  position: absolute;
+  top: 0.625rem;
+  left: 0.625rem;
+  z-index: 1;
 }
 
 .p-topWorks__more {
@@ -3214,6 +3234,20 @@ body.is-loaded .p-fv__pencil {
   .p-workCard__title {
     font-size: 1.1875rem;
   }
+}
+
+.p-workCard__date {
+  margin-top: 0.375rem;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: #7d7a7a;
+}
+
+.p-workCard__new {
+  position: absolute;
+  top: 0.625rem;
+  left: 0.625rem;
+  z-index: 1;
 }
 
 .p-worksArchive {

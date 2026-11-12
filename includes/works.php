@@ -18,6 +18,7 @@ $revealDelay = 0;
         <?php while ($works_query->have_posts()) : $works_query->the_post(); ?>
           <li class="p-topWorks__item js-reveal" data-reveal-delay="<?php echo $revealDelay; ?>">
             <?php $work_video = get_post_meta(get_the_ID(), 'works_video', true); ?>
+            <?php $is_new = tsumugu_works_is_new(get_the_ID()); ?>
             <a class="p-topWorks__link<?php echo $work_video ? ' js-hoverVideoCard' : ''; ?>" href="<?php the_permalink(); ?>">
               <figure class="p-topWorks__img<?php echo $work_video ? ' p-topWorks__img--video' : ''; ?>" style="view-transition-name: work-<?php the_ID(); ?>;">
                 <?php if (has_post_thumbnail()) : ?>
@@ -25,6 +26,9 @@ $revealDelay = 0;
                 <?php endif; ?>
                 <?php if ($work_video) : ?>
                   <video class="p-topWorks__video js-hoverVideo" src="<?php echo esc_url($work_video); ?>" muted loop playsinline preload="none" aria-hidden="true"></video>
+                <?php endif; ?>
+                <?php if ($is_new) : ?>
+                  <span class="c-tag c-tag--new p-topWorks__new">NEW</span>
                 <?php endif; ?>
               </figure>
               <?php $terms = tsumugu_works_tags(get_the_ID()); ?>
@@ -41,6 +45,7 @@ $revealDelay = 0;
                 <?php if ($client) : ?>
                   <p class="p-topWorks__client"><?php echo esc_html($client); ?></p>
                 <?php endif; ?>
+                <p class="p-topWorks__date"><?php echo esc_html(get_the_date('Y年n月')); ?></p>
               </div>
             </a>
           </li>

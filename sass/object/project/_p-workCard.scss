@@ -79,3 +79,16 @@
     font-size: rem(19);
   }
 }
+.p-workCard__date {
+  margin-top: rem(6);
+  font-size: rem(13);
+  line-height: 1.6;
+  color: $color-gray;
+}
+// NEW バッジ（見た目は c-tag--new。ここでは位置だけ指定する）
+.p-workCard__new {
+  position: absolute; // ABS_ANCHOR: .p-workCard__img を基準に左上へ重ねる
+  top: rem(10);
+  left: rem(10);
+  z-index: 1;
+}

@@ -335,7 +335,6 @@ function tsumugu_works_fields() {
   return [
     'works_summary' => ['label' => 'サイト概要（タイトル下に表示）', 'type' => 'text', 'placeholder' => '横浜を拠点とした観光・予約代行サービス'],
     'works_client' => ['label' => 'クライアント', 'type' => 'text', 'placeholder' => '〇〇株式会社様'],
-    'works_date' => ['label' => '制作時期', 'type' => 'text', 'placeholder' => '2026年9月'],
     'works_role' => ['label' => '作業内容（「／」区切りで改行）', 'type' => 'text', 'placeholder' => 'コーディング／WordPress オリジナルテーマ開発'],
     'works_design' => ['label' => 'デザインカンプ', 'type' => 'text', 'placeholder' => 'Figma（PC / SP）'],
     'works_period' => ['label' => '制作期間', 'type' => 'text', 'placeholder' => 'コーディング：3週間（トップ1P＋下層5P）'],
@@ -345,6 +344,17 @@ function tsumugu_works_fields() {
     'works_url_note' => ['label' => 'URL を載せない場合の表記', 'type' => 'text', 'placeholder' => '非公開（センシティブ商材のため）'],
     'works_video' => ['label' => 'デモ動画 URL（メディアの mp4。入力するとアイキャッチ画像の代わりに表示）', 'type' => 'url', 'placeholder' => 'https://…/demo.mp4'],
   ];
+}
+
+/**
+ * 制作実績が新着かどうか（投稿日 = 制作月から 3 か月以内）
+ */
+function tsumugu_works_is_new($post_id) {
+  $published = get_post_time('U', true, $post_id);
+  if (!$published) {
+    return false;
+  }
+  return (time() - $published) < 3 * MONTH_IN_SECONDS;
 }
 
 /**

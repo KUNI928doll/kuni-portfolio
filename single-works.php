@@ -12,7 +12,7 @@
       $terms = tsumugu_works_tags(get_the_ID());
       $work_summary = get_post_meta(get_the_ID(), 'works_summary', true);
       $work_client = get_post_meta(get_the_ID(), 'works_client', true);
-      $work_date = get_post_meta(get_the_ID(), 'works_date', true);
+      $work_date = get_the_date('Y年n月');
       $work_url = get_post_meta(get_the_ID(), 'works_url', true);
       $work_url_note = get_post_meta(get_the_ID(), 'works_url_note', true);
       $work_role = array_filter(array_map('trim', explode('／', (string) get_post_meta(get_the_ID(), 'works_role', true))));

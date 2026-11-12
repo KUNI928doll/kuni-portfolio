@@ -32,3 +32,9 @@
   color: $color-gray;
   border-color: $color-gray;
 }
+// NEW（投稿日から 3 か月以内の実績。一覧カードで先頭に出す）
+.c-tag--new {
+  color: $color-white;
+  background: $color-green-dark;
+  letter-spacing: 0.06em;
+}
